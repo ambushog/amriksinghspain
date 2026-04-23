@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amrik Singh | Timeless Duty</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a0a0a; 
+            --bg-alt: #141414;
+            --text-light: #F4F0EA;
+            --text-muted: #999691;
+            --accent-red: #C32525;
+            --accent-gold: #D4A853;
+            --border-light: rgba(255, 255, 255, 0.15);
+            --whatsapp-green: #25D366;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .main-wrapper { width: 100%; }
+
+        img {
+            max-width: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.1) grayscale(10%);
+        }
+
+        h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; }
+        .italic { font-style: italic; }
+
+        /* ========================================
+           SCROLL PANELS
+        ======================================== */
+        .panel-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+        }
+
+        .panel-normal {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            background-color: var(--bg-dark);
+            padding: 15vh 6vw;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 -30px 60px rgba(0,0,0,0.9); 
+        }
+
+        #section-1 { z-index: 1; }
+        #section-2 { z-index: 2; }
+        #section-3 { z-index: 3; }
+        #section-4 { z-index: 4; }
+        #section-5 { 
+            z-index: 5; 
+            background-color: var(--bg-alt); 
+        }
+        #section-media { 
+            position: relative; 
+            z-index: 6; 
+            background-color: #0d0d0d;
+            box-shadow: 0 -30px 60px rgba(0,0,0,0.9);
+        }
+        #section-whatsapp { 
+            position: sticky;
+            top: 0;
+            z-index: 7; 
+            background-color: #111;
+            box-shadow: 0 -30px 60px rgba(0,0,0,0.9);
+        }
+        #section-6 { 
+            position: relative;
+            z-index: 8; 
+        }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        nav {
+            position: fixed;
+            top: 2rem;
+            width: 100%;
+            padding: 0 4vw;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .nav-pill {
+            pointer-events: auto;
+            background: rgba(20, 20, 20, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-pill a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-pill a:hover { color: var(--text-muted); }
+
+        @media (max-width: 600px) {
+            nav { top: 1rem; padding: 0 3vw; }
+            .nav-pill { padding: 0.6rem 1.2rem; gap: 1rem; font-size: 0.65rem; }
+        }
+
+        /* ========================================
+           TYPOGRAPHY
+        ======================================== */
+        .giant-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-serif);
+            font-size: 24vw;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            z-index: 1;
+            background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255, 255, 255, 0) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .editorial-title {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .editorial-number {
+            font-family: var(--font-serif);
+            font-size: clamp(4rem, 8vw, 8rem);
+            color: var(--text-light);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .text-red { color: var(--accent-red); }
+
+        .editorial-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            max-width: 45ch;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .crosshair-box {
+            position: relative;
+            padding-top: 2rem;
+        }
+        .crosshair-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-light);
+        }
+        .crosshair-box::after {
+            content: '';
+            position: absolute;
+            top: -2rem; left: 20%;
+            width: 1px;
+            height: 4rem;
+            background: var(--border-light);
+        }
+
+        .btn-solid {
+            display: inline-block;
+            background: var(--text-light);
+            color: var(--bg-dark);
+            padding: 1rem 2.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: background 0.3s;
+            margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-solid:hover { background: #cfcbc6; }
+
+        /* ========================================
+           GRIDS & LAYOUTS
+        ======================================== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (min-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 8vw;
+                align-items: center;
+            }
+        }
+
+        .hero-img-box {
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+            width: 99vw;
+            height: 99vh;
+            min-width: 300px;
+        }
+        .hero-img-box img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: scale(1.15);
+        }
+        .img-gray { filter: grayscale(100%) brightness(0.9); z-index: 1; }
+        .img-color {
+            z-index: 2;
+            mask-image: radial-gradient(circle 160px at var(--x, 50%) var(--y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(circle 160px at var(--x, 50%) var(--y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+        }
+        .collage { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .collage img:nth-child(2) { transform: translateY(3rem); }
+
+        /* ========================================
+           MEDIA / VIDEO SECTION
+        ======================================== */
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .media-section {
+            padding: 10vh 6vw;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .media-section h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .media-section .editorial-body {
+            max-width: 60ch;
+            margin-bottom: 3rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 700px) {
+            .video-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1100px) {
+            .video-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .video-card {
+            background: #161616;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .video-card:hover { border-color: var(--accent-gold); transform: translateY(-4px); }
+
+        .video-card iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: block;
+            border: none;
+        }
+
+        .video-card-info {
+            padding: 1rem 1.2rem 1.2rem;
+        }
+        .video-card-info h4 {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+            line-height: 1.4;
+        }
+        .video-card-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* TikTok real embeds */
+        .tiktok-card {
+            background: #161616;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .tiktok-card:hover { border-color: var(--accent-gold); transform: translateY(-4px); }
+
+        .social-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1.4rem;
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            background: transparent;
+        }
+        .social-btn:hover { background: var(--text-light); color: var(--bg-dark); }
+        .social-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+        /* ========================================
+           WHATSAPP MESSAGE BUILDER
+        ======================================== */
+        #section-whatsapp {
+            padding: 12vh 6vw 14vh;
+            display: block;
+            min-height: auto;
+        }
+
+        .wa-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .wa-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .wa-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .wa-builder {
+            background: #111;
+            border: 1px solid var(--border-light);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 700px) {
+            .wa-builder { grid-template-columns: 1fr 1fr; }
+        }
+
+        .wa-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .wa-form-group label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+        }
+
+        .wa-select {
+            background: #1a1a1a;
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999691'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .wa-select:focus { border-color: var(--accent-gold); }
+
+        .wa-preview-box {
+            grid-column: 1 / -1;
+            background: #0a1a0f;
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .wa-preview-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--whatsapp-green);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .wa-preview-label::before {
+            content: '';
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        #wa-message-preview {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-light);
+            white-space: pre-wrap;
+            font-family: var(--font-sans);
+            font-weight: 300;
+            min-height: 80px;
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            width: 100%;
+            cursor: text;
+        }
+        #wa-message-preview:focus {
+            border-bottom: 1px solid rgba(37, 211, 102, 0.4);
+        }
+        .wa-edit-hint {
+            font-size: 0.65rem;
+            color: rgba(37,211,102,0.5);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .wa-preview-box:focus-within .wa-edit-hint { display: block; }
+        .wa-input {
+            background: #1a1a1a;
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .wa-input:focus { border-color: var(--accent-gold); }
+        .wa-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+        .wa-send-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: var(--whatsapp-green);
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-family: var(--font-sans);
+            margin-top: 1.5rem;
+            grid-column: 1 / -1;
+        }
+        .wa-send-btn:hover { background: #1ebe5a; transform: translateY(-2px); }
+        .wa-send-btn svg { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
+
+        /* ========================================
+           FOOTER STACK
+        ======================================== */
+        .footer-stack {
+            position: relative;
+            height: 45vh;
+            width: 100%;
+            background-color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 -40px 80px rgba(0,0,0,0.95);
+            overflow: hidden;
+            z-index: 9;
+        }
+        .footer-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.25; 
+        }
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 4vw;
+        }
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--text-light); }
+        .footer-copy {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* ========================================
+           ANIMATIONS
+        ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        /* ========================================
+           MOBILE RESPONSIVE OVERRIDES
+        ======================================== */
+        @media (max-width: 600px) {
+            .panel-normal { padding: 12vh 5vw 8vh; }
+            .editorial-body { font-size: 0.95rem; max-width: 100%; }
+            .editorial-title { font-size: clamp(2rem, 7vw, 3rem); }
+            .collage { grid-template-columns: 1fr; }
+            .collage img:nth-child(2) { transform: none; }
+            .wa-builder { padding: 1.5rem; gap: 1.5rem; }
+            #wa-message-preview { font-size: 0.85rem; }
+            .wa-send-btn { width: 100%; justify-content: center; }
+            .social-links-row { gap: 0.7rem; }
+            .social-btn { font-size: 0.7rem; padding: 0.6rem 1rem; }
+            .footer-links { gap: 1.2rem; }
+            .media-section { padding: 8vh 5vw; }
+        }
+
+        /* ========================================
+           LANGUAGE PICKER SYSTEM
+        ======================================== */
+
+        /* Fullscreen overlay */
+        #lang-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #050505;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+        /* Lock body scroll when overlay is visible */
+        body.lang-open {
+            overflow: hidden;
+        }
+        #lang-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #lang-overlay.hidden { display: none; }
+
+        .lang-overlay-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 60% 50% at 20% 50%, rgba(195,37,37,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 80% 50%, rgba(212,168,83,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .lang-overlay-grain {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .lang-overlay-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .lang-eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.3s forwards;
+        }
+
+        .lang-headline {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 6vw, 5rem);
+            line-height: 1.1;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.5s forwards;
+        }
+
+        .lang-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.7s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .lang-search-wrap {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.9s forwards;
+        }
+
+        .lang-search {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border-color 0.3s;
+            border-radius: 0;
+        }
+        .lang-search::placeholder { color: rgba(255,255,255,0.25); }
+        .lang-search:focus { border-color: var(--accent-gold); }
+
+        .lang-search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        .lang-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem;
+            max-height: 42vh;
+            overflow-y: auto;
+            padding: 0.5rem 0;
+            opacity: 0;
+            animation: fadeUp 0.8s 1.1s forwards;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+        .lang-grid::-webkit-scrollbar { width: 4px; }
+        .lang-grid::-webkit-scrollbar-track { background: transparent; }
+        .lang-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 0.9rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent-gold);
+            color: var(--text-light);
+        }
+        .lang-btn.active { border-color: var(--accent-red); }
+        .lang-flag { font-size: 1.1rem; flex-shrink: 0; }
+        .lang-name { overflow: hidden; text-overflow: ellipsis; }
+
+        .lang-confirm-btn {
+            display: none;
+        }
+
+        /* Navbar lang toggle */
+        .nav-lang-btn {
+            pointer-events: auto;
+            background: rgba(20,20,20,0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: border-color 0.3s;
+            font-family: var(--font-sans);
+        }
+        .nav-lang-btn:hover { border-color: var(--accent-gold); }
+        .nav-lang-btn .flag { font-size: 1rem; }
+
+        /* Translation loading shimmer */
+        .translating * {
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Tiny toast */
+        #lang-toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(20,20,20,0.95);
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            padding: 0.7rem 1.5rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            z-index: 9998;
+            opacity: 0;
+            transition: all 0.4s;
+            backdrop-filter: blur(12px);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #lang-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====== LANGUAGE PICKER OVERLAY ====== -->
+<div id="lang-overlay">
+    <div class="lang-overlay-bg"></div>
+    <div class="lang-overlay-grain"></div>
+    <div class="lang-overlay-content">
+        <p class="lang-eyebrow">— Amrik Singh · Valencia, Spain</p>
+        <h1 class="lang-headline">Choose Your<br><em>Language</em></h1>
+        <p class="lang-sub">Tap a language to apply it instantly. Change anytime from the menu.</p>
+        <div class="lang-search-wrap">
+            <span class="lang-search-icon">⌕</span>
+            <input class="lang-search" id="lang-search-input" type="text" placeholder="Search language..." autocomplete="off" spellcheck="false">
+        </div>
+        <div class="lang-grid" id="lang-grid"></div>
+        <button class="lang-confirm-btn" id="lang-confirm-btn" disabled>
+            <span id="lang-confirm-text">Select a language</span>
+            <span>→</span>
+        </button>
+    </div>
+</div>
+
+<!-- ====== LANG TOAST ====== -->
+<div id="lang-toast"></div>
+
+    <nav>
+        <div class="nav-pill" style="display:flex;align-items:center;gap:0.8rem;">
+            <img src="./imgs/logo.svg" alt="Amrik Singh Logo" style="height:22px;width:auto;opacity:0.9;filter:brightness(0) invert(1);">
+            <a href="#">&laquo; Amrik Singh</a>
+        </div>
+        <div style="display:flex;gap:0.6rem;align-items:center;">
+            <button class="nav-lang-btn" id="nav-lang-btn" onclick="openLangOverlay()" title="Change language">
+                <span class="flag" id="nav-flag">🌐</span>
+                <span id="nav-lang-label">Language</span>
+            </button>
+            <div class="nav-pill">
+                <a href="#section-media" data-i18n="nav_videos">Videos</a>
+                <a href="#section-whatsapp" data-i18n="nav_message">Message</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+
+        <!-- SECTION 1 -->
+        <section class="panel-sticky" id="section-1">
+            <div class="giant-bg-text" data-i18n="hero_word">SEVA</div>
+            <div class="hero-img-box reveal active">
+                <img class="img-gray" src="./imgs/2/four.png" alt="Amrik Singh">
+                <img class="img-color" src="./imgs/2/four.png" alt="Amrik Singh colour">
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="panel-normal" id="section-2">
+            <div class="grid-2">
+                <div class="reveal">
+                    <div class="editorial-number"><span class="text-red">20</span>0+</div>
+                    <h2 class="editorial-title" data-i18n="s2_title">Action in<br>Every Step.</h2>
+                    <div class="crosshair-box" style="margin-top: 3rem;">
+                        <p class="editorial-body" data-i18n="s2_p1">Amrik Singh stands as a pillar in the Sikh community of Valencia. He is not a politician; he is a force of humanity.</p>
+                        <p class="editorial-body" data-i18n="s2_p2">When the DANA disaster struck, conventional systems hesitated. Leading over two hundred volunteers, he descended into the worst-hit streets to clean homes, clear garages, and restore dignity.</p>
+                    </div>
+                </div>
+                <div class="reveal delay-1">
+                    <img src="imgs/2/port.png" style="height: 80vh;" alt="Volunteers at work">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="panel-sticky" id="section-3">
+            <img src="imgs/2/three.png" style="position:absolute;width:100%;height:100%;z-index:1;opacity:0.5;" alt="">
+            <div style="position:relative;z-index:2;text-align:center;">
+                <h2 class="editorial-title reveal" style="font-size:clamp(3rem,8vw,8rem);" data-i18n="s3_title">Humanity</h2>
+                <p class="editorial-body italic reveal delay-1" style="margin:0 auto;color:#fff;" data-i18n="s3_sub">Beyond borders, beyond self.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section class="panel-normal" id="section-4">
+            <div class="grid-2">
+                <div class="collage reveal">
+                    <img src="imgs/2/singh.png" alt="Food sharing detail 1">
+                    <img src="https://picsum.photos/seed/amrik5/800/1000" alt="Food sharing detail 2">
+                </div>
+                <div class="reveal delay-1" style="padding-left:2vw;">
+                    <h2 class="editorial-title" data-i18n="s4_title">Selfless Duty<br>Meets Crisis.</h2>
+                    <div class="crosshair-box" style="margin-top:2rem;">
+                        <p class="editorial-body" data-i18n="s4_p1">Guided by the core Sikh philosophy of Seva, labor is viewed as a privilege, not a transaction.</p>
+                        <p class="editorial-body" data-i18n="s4_p2">Distribution lines were organized seamlessly. Tons of fresh vegetables and vital supplies found their way to those who had lost everything, proving that true royalty lies in serving others.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section class="panel-sticky" id="section-5" style="align-items:center;justify-content:center;text-align:center;">
+            <div class="reveal" style="max-width:800px;">
+                <div class="editorial-number" style="font-size:6rem;"><span class="text-red">0</span>€</div>
+                <div class="crosshair-box" style="display:inline-block;text-align:left;margin:2rem 0 3rem 0;">
+                    <p class="editorial-body" style="text-align:center;max-width:60ch;" data-i18n="s5_p1">
+                        Offers of financial donations poured in from across the region. They were entirely refused. The mission was never about profit — it was about pure, unadulterated human connection and immediate physical action.
+                    </p>
+                </div>
+                <br>
+                <a href="#section-media" class="btn-solid reveal delay-1" data-i18n="s5_btn">Watch His Story</a>
+            </div>
+        </section>
+
+        <!-- ========================================
+             SECTION: MEDIA — Videos & Social
+        ======================================== -->
+        <section id="section-media" style="position:relative;background:#0d0d0d;">
+            <div class="media-section reveal">
+                <p class="section-label" data-i18n="media_label">— Videos & Media</p>
+                <h2 class="editorial-title" data-i18n="media_title">Watch &amp;<br>Follow Along.</h2>
+                <p class="editorial-body" data-i18n="media_sub">From TikTok to YouTube, Amrik Singh documents life, service, and Sikh culture in Spain with 227K+ followers and 6.8M likes.</p>
+
+                <div class="video-grid">
+
+                    <!-- YouTube Video — FULL WIDTH HERO -->
+                    <div class="video-card reveal" style="grid-column: 1 / -1;">
+                        <iframe 
+                            src="https://www.youtube.com/embed/3CqmP7FaSeA" 
+                            title="Amrik Singh Spain — Featured Video"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width:100%; height:60vw; max-height:620px; min-height:280px;">
+                        </iframe>
+                        <div class="video-card-info">
+                            <h4>Amrik Singh — Featured Story</h4>
+                            <p>YouTube • Shared via his TikTok profile</p>
+                        </div>
+                    </div>
+
+                    <!-- TikTok Video Card 1 -->
+                    <div class="tiktok-card reveal delay-1">
+                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7438221281796869409" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                    </div>
+
+                    <!-- TikTok Video Card 2 -->
+                    <div class="tiktok-card reveal delay-2">
+                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7549308030844865794" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                    </div>
+
+                    <!-- TikTok Video Card 3 -->
+                    <div class="tiktok-card reveal">
+                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7443077278319381792" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                    </div>
+
+                    <!-- TikTok Video Card 4 -->
+                    <div class="tiktok-card reveal delay-1">
+                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7445695426071694625" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                    </div>
+
+                    <!-- TikTok Video Card 5 -->
+                    <div class="tiktok-card reveal delay-2">
+                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7429015793288908065" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                    </div>
+
+                </div><!-- /video-grid -->
+
+                <!-- Social Links Row -->
+                <div class="social-links-row reveal">
+                    <a href="https://www.tiktok.com/@amrik.singh.spain" target="_blank" rel="noopener" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.22a8.18 8.18 0 0 0 4.78 1.52V7.3a4.85 4.85 0 0 1-1.02-.61z"/></svg>
+                        TikTok — 227K Followers
+                    </a>
+                    <a href="https://www.youtube.com/@amriksinghspain" target="_blank" rel="noopener" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+                        YouTube Channel
+                    </a>
+                    <a href="https://www.instagram.com/amrik_singh_spain/" target="_blank" rel="noopener" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        Instagram — 27K
+                    </a>
+                    <a href="https://www.facebook.com/p/Amrik-Singh-Spain-100053133901969/" target="_blank" rel="noopener" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook — 83K
+                    </a>
+                </div>
+
+            </div><!-- /media-section -->
+        </section>
+
+        <!-- ========================================
+             SECTION: WHATSAPP MESSAGE BUILDER
+        ======================================== -->
+        <!-- Scroll wrapper: tall enough to give the sticky section scroll room -->
+        <div style="position:relative; height:200vh;">
+            <section id="section-whatsapp">
+                <div class="wa-wrapper reveal">
+                <p class="section-label" data-i18n="wa_label">— Send a Message</p>
+                <h2 class="wa-title" data-i18n="wa_title">Connect With<br><span class="italic">Amrik Singh.</span></h2>
+                <p class="wa-subtitle" data-i18n="wa_sub">Build your message below and send it directly via WhatsApp in one tap.</p>
+
+                <div class="wa-builder">
+
+                    <div class="wa-form-group">
+                        <label for="wa-purpose" data-i18n="wa_label_purpose">Your Purpose</label>
+                        <select class="wa-select" id="wa-purpose" onchange="buildMessage()">
+                            <option value="" data-i18n="wa_select">— Select —</option>
+                            <option value="volunteer" data-i18n="wa_purpose_volunteer">I want to volunteer</option>
+                            <option value="support" data-i18n="wa_purpose_support">I want to support your cause</option>
+                            <option value="media" data-i18n="wa_purpose_media">Media / Press inquiry</option>
+                            <option value="donation" data-i18n="wa_purpose_donation">I want to donate supplies</option>
+                            <option value="collaborate" data-i18n="wa_purpose_collaborate">I want to collaborate</option>
+                            <option value="learn" data-i18n="wa_purpose_learn">I want to learn about Seva</option>
+                            <option value="community" data-i18n="wa_purpose_community">I want to join the community</option>
+                            <option value="respect" data-i18n="wa_purpose_respect">I just want to say thank you</option>
+                        </select>
+                    </div>
+
+                    <div class="wa-form-group">
+                        <label for="wa-name" data-i18n="wa_label_name">Your Name</label>
+                        <input class="wa-input" id="wa-name" type="text" placeholder="e.g. Priya Sharma" autocomplete="off" oninput="buildMessage()">
+                    </div>
+
+                    <div class="wa-form-group">
+                        <label for="wa-from" data-i18n="wa_label_from">I am from</label>
+                        <select class="wa-select" id="wa-from" onchange="buildMessage()">
+                            <option value="" data-i18n="wa_select_country">— Select country —</option>
+                            <option value="Spain">Spain 🇪🇸</option>
+                            <option value="India">India 🇮🇳</option>
+                            <option value="UK">United Kingdom 🇬🇧</option>
+                            <option value="Canada">Canada 🇨🇦</option>
+                            <option value="USA">USA 🇺🇸</option>
+                            <option value="Portugal">Portugal 🇵🇹</option>
+                            <option value="France">France 🇫🇷</option>
+                            <option value="Germany">Germany 🇩🇪</option>
+                            <option value="Italy">Italy 🇮🇹</option>
+                            <option value="Australia">Australia 🇦🇺</option>
+                            <option value="another country" data-i18n="wa_country_other">another country 🌍</option>
+                        </select>
+                    </div>
+
+                    <div class="wa-form-group">
+                        <label for="wa-tone" data-i18n="wa_label_tone">My Tone</label>
+                        <select class="wa-select" id="wa-tone" onchange="buildMessage()">
+                            <option value="" data-i18n="wa_select">— Select —</option>
+                            <option value="formal" data-i18n="wa_tone_formal">Formal &amp; respectful</option>
+                            <option value="warm" data-i18n="wa_tone_warm">Warm &amp; personal</option>
+                            <option value="brief" data-i18n="wa_tone_brief">Short &amp; direct</option>
+                            <option value="sikh" data-i18n="wa_tone_sikh">With Sikh greeting (Waheguru Ji)</option>
+                        </select>
+                    </div>
+
+                    <div class="wa-form-group">
+                        <label for="wa-urgency" data-i18n="wa_label_urgency">Urgency</label>
+                        <select class="wa-select" id="wa-urgency" onchange="buildMessage()">
+                            <option value="" data-i18n="wa_select">— Select —</option>
+                            <option value="soon" data-i18n="wa_urgency_soon">Reply when convenient</option>
+                            <option value="urgent" data-i18n="wa_urgency_urgent">Urgent — need to connect soon</option>
+                            <option value="planning" data-i18n="wa_urgency_planning">Planning ahead (no rush)</option>
+                        </select>
+                    </div>
+
+                    <div class="wa-form-group">
+                        <label for="wa-custom" data-i18n="wa_label_custom">Additional Note <span style="color:var(--text-muted);font-size:0.65rem;letter-spacing:0.05em;text-transform:none;">(optional)</span></label>
+                        <input class="wa-input" id="wa-custom" type="text" placeholder="Any extra detail you'd like to include..." autocomplete="off" oninput="buildMessage()">
+                    </div>
+
+                    <!-- Message Preview -->
+                    <div class="wa-preview-box">
+                        <div class="wa-preview-label" data-i18n="wa_preview_label">Live Message Preview</div>
+                        <textarea id="wa-message-preview" rows="8" spellcheck="true" data-i18n="wa_preview_placeholder">← Select options above to build your message.</textarea>
+                        <div class="wa-edit-hint">✎ You're editing — what you send is what you see</div>
+                    </div>
+
+                    <!-- Send Button -->
+                    <a id="wa-send-link" href="#" class="wa-send-btn" onclick="return sendWhatsApp()">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        <span data-i18n="wa_send_btn">Send via WhatsApp</span>
+                    </a>
+
+                </div><!-- /wa-builder -->
+            </div>
+            </section>
+        </div><!-- /wa-scroll-wrapper -->
+
+        <!-- FOOTER -->
+        <footer class="footer-stack" id="section-6">
+            <img src="imgs/2/footer.png" alt="Footer Background" class="footer-bg">
+            <div class="footer-content reveal">
+                <h2 class="footer-logo">Amrik Singh</h2>
+                <div class="footer-links">
+                    <a href="https://www.tiktok.com/@amrik.singh.spain" target="_blank">TikTok</a>
+                    <a href="https://www.youtube.com/@amriksinghspain" target="_blank">YouTube</a>
+                    <a href="https://www.instagram.com/amrik_singh_spain/" target="_blank">Instagram</a>
+                    <a href="https://www.facebook.com/p/Amrik-Singh-Spain-100053133901969/" target="_blank">Facebook</a>
+                </div>
+                <p class="footer-copy" data-i18n="footer_copy">&copy; 2026 Amrik Singh Editorial. Valencia, Spain. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div><!-- /main-wrapper -->
+
+<script>
+/* =============================================
+   LANGUAGE DATA — 50+ global languages
+============================================= */
+const LANGUAGES = [
+  { code:'en',  name:'English',    flag:'🇬🇧', nativeName:'English' },
+  { code:'es',  name:'Spanish',    flag:'🇪🇸', nativeName:'Español' },
+  { code:'fr',  name:'French',     flag:'🇫🇷', nativeName:'Français' },
+  { code:'de',  name:'German',     flag:'🇩🇪', nativeName:'Deutsch' },
+  { code:'it',  name:'Italian',    flag:'🇮🇹', nativeName:'Italiano' },
+  { code:'pt',  name:'Portuguese', flag:'🇵🇹', nativeName:'Português' },
+  { code:'nl',  name:'Dutch',      flag:'🇳🇱', nativeName:'Nederlands' },
+  { code:'pl',  name:'Polish',     flag:'🇵🇱', nativeName:'Polski' },
+  { code:'ru',  name:'Russian',    flag:'🇷🇺', nativeName:'Русский' },
+  { code:'uk',  name:'Ukrainian',  flag:'🇺🇦', nativeName:'Українська' },
+  { code:'tr',  name:'Turkish',    flag:'🇹🇷', nativeName:'Türkçe' },
+  { code:'ar',  name:'Arabic',     flag:'🇸🇦', nativeName:'العربية', rtl:true },
+  { code:'fa',  name:'Persian',    flag:'🇮🇷', nativeName:'فارسی', rtl:true },
+  { code:'ur',  name:'Urdu',       flag:'🇵🇰', nativeName:'اردو', rtl:true },
+  { code:'hi',  name:'Hindi',      flag:'🇮🇳', nativeName:'हिन्दी' },
+  { code:'pa',  name:'Punjabi',    flag:'🏳️', nativeName:'ਪੰਜਾਬੀ' },
+  { code:'bn',  name:'Bengali',    flag:'🇧🇩', nativeName:'বাংলা' },
+  { code:'gu',  name:'Gujarati',   flag:'🇮🇳', nativeName:'ગુજરાતી' },
+  { code:'mr',  name:'Marathi',    flag:'🇮🇳', nativeName:'मराठी' },
+  { code:'ta',  name:'Tamil',      flag:'🇮🇳', nativeName:'தமிழ்' },
+  { code:'te',  name:'Telugu',     flag:'🇮🇳', nativeName:'తెలుగు' },
+  { code:'kn',  name:'Kannada',    flag:'🇮🇳', nativeName:'ಕನ್ನಡ' },
+  { code:'ml',  name:'Malayalam',  flag:'🇮🇳', nativeName:'മലയാളം' },
+  { code:'zh',  name:'Chinese (Simplified)',  flag:'🇨🇳', nativeName:'中文（简体）' },
+  { code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼',nativeName:'中文（繁體）' },
+  { code:'ja',  name:'Japanese',   flag:'🇯🇵', nativeName:'日本語' },
+  { code:'ko',  name:'Korean',     flag:'🇰🇷', nativeName:'한국어' },
+  { code:'vi',  name:'Vietnamese', flag:'🇻🇳', nativeName:'Tiếng Việt' },
+  { code:'th',  name:'Thai',       flag:'🇹🇭', nativeName:'ภาษาไทย' },
+  { code:'id',  name:'Indonesian', flag:'🇮🇩', nativeName:'Bahasa Indonesia' },
+  { code:'ms',  name:'Malay',      flag:'🇲🇾', nativeName:'Bahasa Melayu' },
+  { code:'tl',  name:'Filipino',   flag:'🇵🇭', nativeName:'Filipino' },
+  { code:'sw',  name:'Swahili',    flag:'🇰🇪', nativeName:'Kiswahili' },
+  { code:'am',  name:'Amharic',    flag:'🇪🇹', nativeName:'አማርኛ' },
+  { code:'yo',  name:'Yoruba',     flag:'🇳🇬', nativeName:'Yorùbá' },
+  { code:'ha',  name:'Hausa',      flag:'🇳🇬', nativeName:'Hausa' },
+  { code:'zu',  name:'Zulu',       flag:'🇿🇦', nativeName:'isiZulu' },
+  { code:'sv',  name:'Swedish',    flag:'🇸🇪', nativeName:'Svenska' },
+  { code:'no',  name:'Norwegian',  flag:'🇳🇴', nativeName:'Norsk' },
+  { code:'da',  name:'Danish',     flag:'🇩🇰', nativeName:'Dansk' },
+  { code:'fi',  name:'Finnish',    flag:'🇫🇮', nativeName:'Suomi' },
+  { code:'el',  name:'Greek',      flag:'🇬🇷', nativeName:'Ελληνικά' },
+  { code:'cs',  name:'Czech',      flag:'🇨🇿', nativeName:'Čeština' },
+  { code:'sk',  name:'Slovak',     flag:'🇸🇰', nativeName:'Slovenčina' },
+  { code:'hu',  name:'Hungarian',  flag:'🇭🇺', nativeName:'Magyar' },
+  { code:'ro',  name:'Romanian',   flag:'🇷🇴', nativeName:'Română' },
+  { code:'bg',  name:'Bulgarian',  flag:'🇧🇬', nativeName:'Български' },
+  { code:'hr',  name:'Croatian',   flag:'🇭🇷', nativeName:'Hrvatski' },
+  { code:'sr',  name:'Serbian',    flag:'🇷🇸', nativeName:'Српски' },
+  { code:'he',  name:'Hebrew',     flag:'🇮🇱', nativeName:'עברית', rtl:true },
+  { code:'ka',  name:'Georgian',   flag:'🇬🇪', nativeName:'ქართული' },
+  { code:'az',  name:'Azerbaijani',flag:'🇦🇿', nativeName:'Azərbaycan' },
+  { code:'kk',  name:'Kazakh',     flag:'🇰🇿', nativeName:'Қазақ' },
+  { code:'uz',  name:'Uzbek',      flag:'🇺🇿', nativeName:'Oʻzbek' },
+  { code:'mn',  name:'Mongolian',  flag:'🇲🇳', nativeName:'Монгол' },
+  { code:'ne',  name:'Nepali',     flag:'🇳🇵', nativeName:'नेपाली' },
+  { code:'si',  name:'Sinhala',    flag:'🇱🇰', nativeName:'සිංහල' },
+  { code:'my',  name:'Burmese',    flag:'🇲🇲', nativeName:'မြန်မာဘာသာ' },
+  { code:'km',  name:'Khmer',      flag:'🇰🇭', nativeName:'ភាសាខ្មែរ' },
+  { code:'lo',  name:'Lao',        flag:'🇱🇦', nativeName:'ລາວ' },
+  { code:'af',  name:'Afrikaans',  flag:'🇿🇦', nativeName:'Afrikaans' },
+  { code:'ca',  name:'Catalan',    flag:'🏳️', nativeName:'Català' },
+  { code:'eu',  name:'Basque',     flag:'🏳️', nativeName:'Euskara' },
+  { code:'gl',  name:'Galician',   flag:'🏳️', nativeName:'Galego' },
+];
+
+/* =============================================
+   ENGLISH SOURCE STRINGS (ground truth)
+============================================= */
+const EN = {
+  nav_videos:   'Videos',
+  nav_message:  'Message',
+  nav_contact:  'Contact',
+  hero_word:    'SEVA',
+  s2_title:     'Action in Every Step.',
+  s2_p1:        'Amrik Singh stands as a pillar in the Sikh community of Valencia. He is not a politician; he is a force of humanity.',
+  s2_p2:        'When the DANA disaster struck, conventional systems hesitated. Leading over two hundred volunteers, he descended into the worst-hit streets to clean homes, clear garages, and restore dignity.',
+  s3_title:     'Humanity',
+  s3_sub:       'Beyond borders, beyond self.',
+  s4_title:     'Selfless Duty Meets Crisis.',
+  s4_p1:        'Guided by the core Sikh philosophy of Seva, labor is viewed as a privilege, not a transaction.',
+  s4_p2:        'Distribution lines were organized seamlessly. Tons of fresh vegetables and vital supplies found their way to those who had lost everything, proving that true royalty lies in serving others.',
+  s5_p1:        'Offers of financial donations poured in from across the region. They were entirely refused. The mission was never about profit — it was about pure, unadulterated human connection and immediate physical action.',
+  s5_btn:       'Watch His Story',
+  media_label:  '— Videos & Media',
+  media_title:  'Watch & Follow Along.',
+  media_sub:    'From TikTok to YouTube, Amrik Singh documents life, service, and Sikh culture in Spain with 227K+ followers and 6.8M likes.',
+  wa_label:     '— Send a Message',
+  wa_title:     'Connect With Amrik Singh.',
+  wa_sub:       'Build your message below and send it directly via WhatsApp in one tap.',
+  footer_copy:  '© 2026 Amrik Singh Editorial. Valencia, Spain. All rights reserved.',
+
+  // WhatsApp builder UI labels
+  wa_label_purpose:       'Your Purpose',
+  wa_label_name:          'Your Name',
+  wa_label_from:          'I am from',
+  wa_label_tone:          'My Tone',
+  wa_label_urgency:       'Urgency',
+  wa_label_custom:        'Additional Note',
+  wa_select:              '— Select —',
+  wa_select_country:      '— Select country —',
+  wa_country_other:       'another country 🌍',
+  wa_preview_label:       'Live Message Preview',
+  wa_preview_placeholder: '← Select options above to build your message.',
+  wa_send_btn:            'Send via WhatsApp',
+
+  // WhatsApp purpose options
+  wa_purpose_volunteer:   "I want to volunteer",
+  wa_purpose_support:     "I want to support your cause",
+  wa_purpose_media:       "Media / Press inquiry",
+  wa_purpose_donation:    "I want to donate supplies",
+  wa_purpose_collaborate: "I want to collaborate",
+  wa_purpose_learn:       "I want to learn about Seva",
+  wa_purpose_community:   "I want to join the community",
+  wa_purpose_respect:     "I just want to say thank you",
+
+  // WhatsApp tone options
+  wa_tone_formal: "Formal & respectful",
+  wa_tone_warm:   "Warm & personal",
+  wa_tone_brief:  "Short & direct",
+  wa_tone_sikh:   "With Sikh greeting (Waheguru Ji)",
+
+  // WhatsApp urgency options
+  wa_urgency_soon:     "Reply when convenient",
+  wa_urgency_urgent:   "Urgent — need to connect soon",
+  wa_urgency_planning: "Planning ahead (no rush)",
+
+  // WhatsApp message body parts
+  wa_msg_name_intro:               "My name is [Your Name]",
+  wa_msg_name_prefix:              "My name is",
+  wa_msg_from_join:                "and I am contacting you from",
+  wa_msg_body_purpose_volunteer:   "I'd like to volunteer with your group",
+  wa_msg_body_purpose_support:     "I want to support your humanitarian work",
+  wa_msg_body_purpose_media:       "I'm reaching out for a media/press inquiry",
+  wa_msg_body_purpose_donation:    "I'd like to donate supplies or resources",
+  wa_msg_body_purpose_collaborate: "I'd love to explore a collaboration",
+  wa_msg_body_purpose_learn:       "I want to learn more about the spirit of Seva",
+  wa_msg_body_purpose_community:   "I'd like to join your community",
+  wa_msg_body_purpose_respect:     "I simply want to say thank you for everything you've done",
+  wa_msg_inspiration: "I came across your incredible work during the Valencia DANA floods — your selfless leadership of 200+ Sikh volunteers and your commitment to Seva has truly inspired me.",
+  wa_msg_urgency_soon:     "Please reply whenever convenient.",
+  wa_msg_urgency_urgent:   "If possible, I'd appreciate a quick reply.",
+  wa_msg_urgency_planning: "No rush at all — connecting whenever works for you.",
+  wa_msg_closing: "Thank you for your time and for all that you do.",
+  wa_msg_sign:    "With respect,\n[Your Name]",
+  wa_msg_sign_prefix: "With respect,",
+  wa_greeting_formal: "Dear Amrik Singh,",
+  wa_greeting_warm:   "Hello Amrik! 🙏",
+  wa_greeting_brief:  "Hi Amrik,",
+  wa_greeting_sikh:   "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh 🙏\n\nDear Amrik Singh,",
+};
+
+/* Cache not needed — Google Translate handles it */
+// const translationCache = { en: EN };
+
+/* =============================================
+   STATE
+============================================= */
+let currentLang = 'en';
+let selectedLang = null;
+
+/* =============================================
+   OVERLAY LOGIC
+============================================= */
+function buildLangGrid(filter = '') {
+  const grid = document.getElementById('lang-grid');
+  const q = filter.toLowerCase();
+  const filtered = LANGUAGES.filter(l =>
+    l.name.toLowerCase().includes(q) ||
+    l.nativeName.toLowerCase().includes(q) ||
+    l.code.toLowerCase().includes(q)
+  );
+  grid.innerHTML = filtered.map(l => `
+    <button class="lang-btn ${l.code === selectedLang ? 'active' : ''}"
+            onclick="selectLang('${l.code}','${l.flag}','${l.nativeName.replace(/'/g,"\\'")}')">
+      <span class="lang-flag">${l.flag}</span>
+      <span class="lang-name">${l.nativeName}</span>
+    </button>
+  `).join('');
+}
+
+function selectLang(code, flag, native) {
+  selectedLang = code;
+  buildLangGrid(document.getElementById('lang-search-input').value);
+  // Immediately close & apply — no confirm button needed
+  closeLangOverlay();
+  applyLanguage(code);
+}
+
+function openLangOverlay() {
+  selectedLang = currentLang;
+  buildLangGrid();
+  const overlay = document.getElementById('lang-overlay');
+  overlay.classList.remove('hidden','fade-out');
+  overlay.style.opacity = '1';
+  overlay.style.display = 'flex';
+  document.body.classList.add('lang-open');
+  setTimeout(() => document.getElementById('lang-search-input').focus(), 600);
+}
+
+function closeLangOverlay() {
+  const overlay = document.getElementById('lang-overlay');
+  overlay.classList.add('fade-out');
+  document.body.classList.remove('lang-open');
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    overlay.style.display = 'none';
+  }, 800);
+}
+
+document.getElementById('lang-search-input').addEventListener('input', e => {
+  buildLangGrid(e.target.value);
+});
+
+document.getElementById('lang-confirm-btn').addEventListener('click', () => {
+  if (!selectedLang) return;
+  closeLangOverlay();
+  applyLanguage(selectedLang);
+});
+
+/* =============================================
+   GOOGLE TRANSLATE ENGINE
+   Uses translate.googleapis.com directly —
+   works on file://, iframe, any environment.
+   Translates every [data-i18n] text node.
+============================================= */
+
+const GT_CODE_MAP = { 'zh':'zh-CN', 'zh-TW':'zh-TW' };
+function gtCode(c) { return GT_CODE_MAP[c] || c; }
+
+// Cache so same language never re-fetches
+const gtCache = {};
+
+async function googleTranslateText(texts, targetLang) {
+  // Build a single batched request — join with \n, split after
+  const joined = texts.join('\n||||\n');
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${gtCode(targetLang)}&dt=t&q=${encodeURIComponent(joined)}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  // GT returns array of [translated, original, ...] pairs
+  const full = json[0].map(seg => seg[0]).join('');
+  return full.split('\n||||\n');
+}
+
+async function applyLanguage(langCode) {
+  if (langCode === currentLang) return;
+  currentLang = langCode;
+  localStorage.setItem('amrik_lang', langCode);
+
+  const langObj = LANGUAGES.find(l => l.code === langCode);
+
+  // Update navbar pill
+  document.getElementById('nav-flag').textContent = langObj?.flag || '🌐';
+  document.getElementById('nav-lang-label').textContent = langObj?.nativeName || langCode.toUpperCase();
+
+  // RTL support
+  document.documentElement.dir = langObj?.rtl ? 'rtl' : 'ltr';
+  document.documentElement.lang = langCode;
+
+  // English → restore originals from EN object
+  if (langCode === 'en') {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (EN[key]) {
+        if (el.tagName === 'OPTION') {
+          el.textContent = EN[key];
+        } else {
+          el.innerHTML = EN[key];
+        }
+      }
+    });
+    // Rebuild message in English
+    const preview = document.getElementById('wa-message-preview');
+    if (preview) {
+      const purpose = document.getElementById('wa-purpose')?.value;
+      const tone    = document.getElementById('wa-tone')?.value;
+      const urgency = document.getElementById('wa-urgency')?.value;
+      const name    = document.getElementById('wa-name')?.value;
+      if (purpose || tone || urgency || name) buildMessage();
+      else preview.value = EN['wa_preview_placeholder'];
+    }
+    showToast('🇬🇧 English');
+    return;
+  }
+
+  // Cached already?
+  if (gtCache[langCode]) {
+    applyTranslated(gtCache[langCode]);
+    showToast(`${langObj?.flag} ${langObj?.nativeName}`);
+    return;
+  }
+
+  showToast(`${langObj?.flag} Translating…`);
+
+  // Collect DOM i18n keys PLUS all EN message-body keys so t() works in buildMessage
+  const domNodes = document.querySelectorAll('[data-i18n]');
+  const domKeys = [...domNodes].map(el => el.dataset.i18n);
+  const extraKeys = Object.keys(EN).filter(k => !domKeys.includes(k));
+  const keys = [...domKeys, ...extraKeys];
+  const texts = keys.map(k => EN[k] || '');
+
+  try {
+    const translated = await googleTranslateText(texts, langCode);
+    const map = {};
+    keys.forEach((k, i) => { map[k] = translated[i] || texts[i]; });
+    gtCache[langCode] = map;
+    applyTranslated(map);
+    showToast(`${langObj?.flag} ${langObj?.nativeName}`);
+  } catch(e) {
+    console.error('Translation error:', e);
+    showToast('⚠ Translation unavailable');
+  }
+}
+
+function applyTranslated(map) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (!map[key]) return;
+    const val = map[key];
+    // <option> elements: set text content directly
+    if (el.tagName === 'OPTION') {
+      el.textContent = val;
+      return;
+    }
+    if (el.children.length === 0) {
+      el.textContent = val;
+    } else {
+      // Walk text nodes and replace the first substantial one
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.textContent.trim().length > 2) {
+          node.textContent = val;
+          break;
+        }
+      }
+    }
+  });
+  // Rebuild message preview in the new language
+  const preview = document.getElementById('wa-message-preview');
+  if (preview) {
+    const purpose = document.getElementById('wa-purpose')?.value;
+    const tone    = document.getElementById('wa-tone')?.value;
+    const urgency = document.getElementById('wa-urgency')?.value;
+    const name    = document.getElementById('wa-name')?.value;
+    if (purpose || tone || urgency || name) {
+      buildMessage();
+    } else {
+      preview.value = map['wa_preview_placeholder'] || EN['wa_preview_placeholder'];
+    }
+  }
+}
+
+/* =============================================
+   TOAST
+============================================= */
+function showToast(msg) {
+  const t = document.getElementById('lang-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* =============================================
+   INIT ON LOAD
+============================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  buildLangGrid();
+
+  const stored = localStorage.getItem('amrik_lang');
+  if (stored && stored !== 'en') {
+    // Returning user with non-English preference
+    const langObj = LANGUAGES.find(l => l.code === stored);
+    document.getElementById('nav-flag').textContent = langObj?.flag || '🌐';
+    document.getElementById('nav-lang-label').textContent = langObj?.nativeName || stored;
+    document.documentElement.dir = langObj?.rtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = stored;
+    selectedLang = stored;
+    currentLang = 'en'; // must be 'en' so applyLanguage doesn't early-exit
+    // Close overlay immediately (they already chose)
+    const overlay = document.getElementById('lang-overlay');
+    overlay.classList.add('fade-out');
+    document.body.classList.remove('lang-open');
+    setTimeout(() => { overlay.classList.add('hidden'); overlay.style.display = 'none'; }, 400);
+    // Auto-translate on load
+    window.addEventListener('load', () => {
+      setTimeout(() => applyLanguage(stored), 300);
+    });
+  } else if (stored === 'en') {
+    document.getElementById('nav-flag').textContent = '🇬🇧';
+    document.getElementById('nav-lang-label').textContent = 'English';
+    currentLang = 'en';
+    const overlay = document.getElementById('lang-overlay');
+    overlay.classList.add('fade-out');
+    document.body.classList.remove('lang-open');
+    setTimeout(() => { overlay.classList.add('hidden'); overlay.style.display = 'none'; }, 400);
+  } else {
+    // First visit — show the beautiful picker overlay, lock scroll
+    selectedLang = null;
+    document.body.classList.add('lang-open');
+  }
+});
+
+/* =============================================
+   HERO COLOUR REVEAL
+============================================= */
+const box = document.querySelector('.hero-img-box');
+if (box) {
+  box.addEventListener('mousemove', e => {
+    const r = box.getBoundingClientRect();
+    box.style.setProperty('--x', `${e.clientX - r.left}px`);
+    box.style.setProperty('--y', `${e.clientY - r.top}px`);
+  });
+  window.addEventListener('load', () => {
+    const r = box.getBoundingClientRect();
+    const cy = r.height / 2, sx = r.width * 0.2, ex = r.width * 0.8;
+    const dur = 1200, t0 = performance.now();
+    function animate(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const e = 0.5 - Math.cos(p * Math.PI) / 2;
+      box.style.setProperty('--x', `${sx + (ex - sx) * e}px`);
+      box.style.setProperty('--y', `${cy}px`);
+      if (p < 1) requestAnimationFrame(animate);
+      else { box.style.setProperty('--x','-9999px'); box.style.setProperty('--y','-9999px'); }
+    }
+    setTimeout(() => requestAnimationFrame(animate), 800);
+  });
+}
+
+/* =============================================
+   SCROLL REVEAL
+============================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+});
+
+/* =============================================
+   WHATSAPP BUILDER
+   All strings pulled from the live EN/translated
+   i18n map so the message language matches the
+   chosen UI language.
+============================================= */
+
+// Returns the current translated value for a key
+function t(key) {
+  // If translated cache exists for current lang, use it; else fall back to EN
+  if (currentLang !== 'en' && gtCache[currentLang] && gtCache[currentLang][key]) {
+    return gtCache[currentLang][key];
+  }
+  return EN[key] || '';
+}
+
+function buildMessage() {
+  const purpose = document.getElementById('wa-purpose').value;
+  const name    = (document.getElementById('wa-name')?.value || '').trim();
+  const from    = document.getElementById('wa-from').value;
+  const tone    = document.getElementById('wa-tone').value;
+  const urgency = document.getElementById('wa-urgency').value;
+  const custom  = (document.getElementById('wa-custom')?.value || '').trim();
+  const preview = document.getElementById('wa-message-preview');
+
+  if (!purpose && !from && !tone && !urgency && !name) {
+    preview.value = t('wa_preview_placeholder');
+    return;
+  }
+
+  const greetingMap = {
+    formal: t('wa_greeting_formal'),
+    warm:   t('wa_greeting_warm'),
+    brief:  t('wa_greeting_brief'),
+    sikh:   t('wa_greeting_sikh'),
+  };
+  const purposeMap = {
+    volunteer:   t('wa_msg_body_purpose_volunteer'),
+    support:     t('wa_msg_body_purpose_support'),
+    media:       t('wa_msg_body_purpose_media'),
+    donation:    t('wa_msg_body_purpose_donation'),
+    collaborate: t('wa_msg_body_purpose_collaborate'),
+    learn:       t('wa_msg_body_purpose_learn'),
+    community:   t('wa_msg_body_purpose_community'),
+    respect:     t('wa_msg_body_purpose_respect'),
+  };
+  const urgencyMap = {
+    soon:     t('wa_msg_urgency_soon'),
+    urgent:   t('wa_msg_urgency_urgent'),
+    planning: t('wa_msg_urgency_planning'),
+  };
+
+  const greeting   = greetingMap[tone] || t('wa_greeting_formal');
+  const purposeStr = purposeMap[purpose] || '';
+  const urgencyStr = urgencyMap[urgency] || '';
+  const nameIntro  = name ? `${t('wa_msg_name_prefix')} ${name}` : t('wa_msg_name_intro');
+  const fromJoin   = t('wa_msg_from_join');
+  const inspiration = t('wa_msg_inspiration');
+  const closing    = t('wa_msg_closing');
+  const sign       = name ? `${t('wa_msg_sign_prefix')}\n${name}` : t('wa_msg_sign');
+
+  let msg = `${greeting}\n\n`;
+  msg += `${nameIntro}${from ? `, ${fromJoin} ${from}` : ''}. ${purposeStr}.\n\n`;
+  msg += `${inspiration}\n\n`;
+  if (urgencyStr) msg += `${urgencyStr}\n\n`;
+  if (custom) msg += `${custom}\n\n`;
+  msg += `${closing}\n\n${sign}`;
+  preview.value = msg;
+}
+
+function sendWhatsApp() {
+  const preview = document.getElementById('wa-message-preview').value;
+  const placeholder = t('wa_preview_placeholder');
+  if (preview === placeholder || preview.startsWith('←')) { alert(t('wa_select') || 'Please select at least one option first.'); return false; }
+  window.open(`https://wa.me/+33763234095?text=${encodeURIComponent(preview)}`, '_blank');
+  return false;
+}
+</script>
+</body>
+</html>
