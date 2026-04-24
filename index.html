@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amrik Singh | Timeless Duty</title>
-    
+    <meta name="description" content="Amrik Singh — Sikh community leader in Valencia, Spain. Humanitarian. Volunteer. 227K+ followers.">
+
+    <!-- Favicon (small and cacheable) -->
+    <link rel="icon" href="./imgs/logo.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="./imgs/logo.svg">
+
+    <!-- DNS prefetch for third-party origins to reduce DNS lookup time -->
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+    <link rel="dns-prefetch" href="https://www.tiktok.com">
+    <link rel="dns-prefetch" href="https://wa.me">
+    <link rel="dns-prefetch" href="https://picsum.photos">
+    <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+
+    <!-- Cache control hint for browsers -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"></noscript>
 
     <style>
         :root {
@@ -342,6 +359,64 @@
         }
         .tiktok-card:hover { border-color: var(--accent-gold); transform: translateY(-4px); }
 
+        /* ========================================
+           VIDEO FACADE (click-to-load)
+           Saves ~300 requests on page load
+        ======================================== */
+        .video-facade {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+        }
+        .video-facade img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(0.75);
+        }
+        .video-facade:hover img { transform: scale(1.04); filter: brightness(0.55); }
+
+        .facade-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .facade-play svg {
+            width: 64px;
+            height: 64px;
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+            transition: transform 0.3s;
+        }
+        .video-facade:hover .facade-play svg { transform: scale(1.15); }
+
+        .facade-platform {
+            position: absolute;
+            bottom: 0.8rem;
+            left: 0.9rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            background: rgba(0,0,0,0.5);
+            padding: 0.25rem 0.6rem;
+            border-radius: 3px;
+        }
+
+        /* YouTube facade — 16:9 */
+        .yt-facade { aspect-ratio: 16/9; }
+
+        /* TikTok facade — portrait */
+        .tt-facade { aspect-ratio: 9/16; max-height: 700px; }
+
+        /* When the iframe is loaded, hide the facade overlay */
+        .video-facade.loaded { display: none; }
+
         .social-links-row {
             display: flex;
             flex-wrap: wrap;
@@ -587,6 +662,19 @@
             color: var(--text-muted);
             opacity: 0.6;
             letter-spacing: 0.05em;
+        }
+
+        /* ========================================
+           PERFORMANCE: Content Visibility
+        ======================================== */
+        #section-3,
+        #section-4,
+        #section-5,
+        #section-media,
+        #section-whatsapp,
+        #section-6 {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 100vh;
         }
 
         /* ========================================
@@ -869,7 +957,7 @@
 
     <nav>
         <div class="nav-pill" style="display:flex;align-items:center;gap:0.8rem;">
-            <img src="logo.svg" alt="Amrik Singh Logo" style="height:22px;width:auto;opacity:0.9;filter:brightness(0) invert(1);">
+            <img src="./imgs/logo.svg" alt="Amrik Singh Logo" width="22" height="22" style="height:22px;width:auto;opacity:0.9;filter:brightness(0) invert(1);" loading="eager" decoding="async">
             <a href="#">&laquo; Amrik Singh</a>
         </div>
         <div style="display:flex;gap:0.6rem;align-items:center;">
@@ -890,8 +978,8 @@
         <section class="panel-sticky" id="section-1">
             <div class="giant-bg-text" data-i18n="hero_word">SEVA</div>
             <div class="hero-img-box reveal active">
-                <img class="img-gray" src="./imgs/2/four.png" alt="Amrik Singh">
-                <img class="img-color" src="./imgs/2/four.png" alt="Amrik Singh colour">
+                <img class="img-gray" src="./imgs/2/four.webp" alt="Amrik Singh" fetchpriority="high" decoding="sync">
+                <img class="img-color" src="./imgs/2/four.webp" alt="Amrik Singh colour" fetchpriority="high" decoding="sync">
             </div>
         </section>
 
@@ -907,14 +995,14 @@
                     </div>
                 </div>
                 <div class="reveal delay-1">
-                    <img src="imgs/2/port.png" style="height: 80vh;" alt="Volunteers at work">
+                    <img src="imgs/2/port.webp" style="height: 80vh;" alt="Volunteers at work" loading="lazy" decoding="async">
                 </div>
             </div>
         </section>
 
         <!-- SECTION 3 -->
         <section class="panel-sticky" id="section-3">
-            <img src="imgs/2/three.png" style="position:absolute;width:100%;height:100%;z-index:1;opacity:0.5;" alt="">
+            <img src="imgs/2/three.webp" style="position:absolute;width:100%;height:100%;z-index:1;opacity:0.5;" alt="" loading="lazy" decoding="async">
             <div style="position:relative;z-index:2;text-align:center;">
                 <h2 class="editorial-title reveal" style="font-size:clamp(3rem,8vw,8rem);" data-i18n="s3_title">Humanity</h2>
                 <p class="editorial-body italic reveal delay-1" style="margin:0 auto;color:#fff;" data-i18n="s3_sub">Beyond borders, beyond self.</p>
@@ -925,8 +1013,8 @@
         <section class="panel-normal" id="section-4">
             <div class="grid-2">
                 <div class="collage reveal">
-                    <img src="imgs/2/singh.png" alt="Food sharing detail 1">
-                    <img src="https://picsum.photos/seed/amrik5/800/1000" alt="Food sharing detail 2">
+                    <img src="imgs/2/singh.webp" alt="Food sharing detail 1" loading="lazy" decoding="async">
+                    <img src="https://picsum.photos/seed/amrik5/800/1000" alt="Food sharing detail 2" loading="lazy" decoding="async">
                 </div>
                 <div class="reveal delay-1" style="padding-left:2vw;">
                     <h2 class="editorial-title" data-i18n="s4_title">Selfless Duty<br>Meets Crisis.</h2>
@@ -965,13 +1053,18 @@
 
                     <!-- YouTube Video — FULL WIDTH HERO -->
                     <div class="video-card reveal" style="grid-column: 1 / -1;">
-                        <iframe 
-                            src="https://www.youtube.com/embed/3CqmP7FaSeA" 
-                            title="Amrik Singh Spain — Featured Video"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen
-                            style="width:100%; height:60vw; max-height:620px; min-height:280px;">
-                        </iframe>
+                        <!-- Facade: loads thumbnail, fires iframe on click -->
+                        <div class="video-facade yt-facade" onclick="loadVideo(this,'https://www.youtube.com/embed/3CqmP7FaSeA?autoplay=1','yt-frame','width:100%;height:60vw;max-height:620px;min-height:280px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/maxresdefault.jpg" alt="Amrik Singh Spain — Featured Video" loading="lazy" decoding="async">
+                            <div class="facade-play">
+                                <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#ff0000"/>
+                                    <path d="M 45,24 27,14 27,34" fill="white"/>
+                                </svg>
+                            </div>
+                            <span class="facade-platform">YouTube</span>
+                        </div>
+                        <iframe id="yt-frame" style="display:none;" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                         <div class="video-card-info">
                             <h4>Amrik Singh — Featured Story</h4>
                             <p>YouTube • Shared via his TikTok profile</p>
@@ -980,27 +1073,52 @@
 
                     <!-- TikTok Video Card 1 -->
                     <div class="tiktok-card reveal delay-1">
-                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7438221281796869409" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7438221281796869409','tt-frame-1','width:100%;height:700px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 1" loading="lazy" decoding="async" style="height:700px;object-position:center;">
+                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
+                            <span class="facade-platform">TikTok</span>
+                        </div>
+                        <iframe id="tt-frame-1" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 2 -->
                     <div class="tiktok-card reveal delay-2">
-                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7549308030844865794" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7549308030844865794','tt-frame-2','width:100%;height:700px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 2" loading="lazy" decoding="async" style="height:700px;object-position:center;">
+                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
+                            <span class="facade-platform">TikTok</span>
+                        </div>
+                        <iframe id="tt-frame-2" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 3 -->
                     <div class="tiktok-card reveal">
-                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7443077278319381792" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7443077278319381792','tt-frame-3','width:100%;height:700px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 3" loading="lazy" decoding="async" style="height:700px;object-position:center;">
+                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
+                            <span class="facade-platform">TikTok</span>
+                        </div>
+                        <iframe id="tt-frame-3" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 4 -->
                     <div class="tiktok-card reveal delay-1">
-                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7445695426071694625" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7445695426071694625','tt-frame-4','width:100%;height:700px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 4" loading="lazy" decoding="async" style="height:700px;object-position:center;">
+                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
+                            <span class="facade-platform">TikTok</span>
+                        </div>
+                        <iframe id="tt-frame-4" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 5 -->
                     <div class="tiktok-card reveal delay-2">
-                        <iframe scrolling="no" src="https://www.tiktok.com/embed/v2/7429015793288908065" allowfullscreen allow="encrypted-media" style="width:100%;height:700px;border:none;display:block;"></iframe>
+                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7429015793288908065','tt-frame-5','width:100%;height:700px;border:none;display:block;')">
+                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 5" loading="lazy" decoding="async" style="height:700px;object-position:center;">
+                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
+                            <span class="facade-platform">TikTok</span>
+                        </div>
+                        <iframe id="tt-frame-5" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                 </div><!-- /video-grid -->
@@ -1125,7 +1243,7 @@
 
         <!-- FOOTER -->
         <footer class="footer-stack" id="section-6">
-            <img src="imgs/2/footer.png" alt="Footer Background" class="footer-bg">
+            <img src="imgs/2/footer.webp" alt="Footer Background" class="footer-bg" loading="lazy" decoding="async">
             <div class="footer-content reveal">
                 <h2 class="footer-logo">Amrik Singh</h2>
                 <div class="footer-links">
@@ -1499,8 +1617,18 @@ function applyTranslated(map) {
 }
 
 /* =============================================
-   TOAST
+   VIDEO FACADE — click-to-load
+   Replaces thumbnail with real iframe on click.
+   Saves ~300 HTTP requests on initial load.
 ============================================= */
+function loadVideo(facade, src, frameId, styleStr) {
+  const frame = document.getElementById(frameId);
+  frame.src = src;
+  frame.setAttribute('style', styleStr);
+  facade.classList.add('loaded'); // hides the facade
+}
+
+
 function showToast(msg) {
   const t = document.getElementById('lang-toast');
   t.textContent = msg;
