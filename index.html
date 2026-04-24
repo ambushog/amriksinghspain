@@ -10,6 +10,22 @@
     <link rel="icon" href="./imgs/logo.svg" type="image/svg+xml">
     <link rel="shortcut icon" href="./imgs/logo.svg">
 
+    <!-- ===== PWA ===== -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Amrik Singh">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./icons/icon-152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./icons/icon-144.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="./icons/icon-128.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="./icons/icon-512.png">
+    <meta name="msapplication-TileImage" content="./icons/icon-144.png">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+
     <!-- DNS prefetch for third-party origins to reduce DNS lookup time -->
     <link rel="dns-prefetch" href="https://www.youtube.com">
     <link rel="dns-prefetch" href="https://www.tiktok.com">
@@ -114,44 +130,223 @@
         }
 
         /* ========================================
-           NAVIGATION
+           NAVIGATION — Full-width bar
         ======================================== */
         nav {
             position: fixed;
-            top: 2rem;
+            top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
-            padding: 0 4vw;
+            height: 58px;
+            padding: 0 2vw;
             display: flex;
+            align-items: center;
             justify-content: space-between;
             z-index: 1000;
-            pointer-events: none; 
+            pointer-events: all;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            gap: 0.5rem;
         }
 
-        .nav-pill {
-            pointer-events: auto;
-            background: rgba(20, 20, 20, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
+        /* Left brand cluster */
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .nav-brand img {
+            height: 24px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+            display: block;
+        }
+        .nav-brand-name {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        /* Center links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 0 1.2rem;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid var(--border-light);
+            transition: color 0.25s, background 0.25s;
+            white-space: nowrap;
+        }
+        .nav-links a:first-child { border-left: 1px solid var(--border-light); }
+        .nav-links a:hover { color: var(--text-light); background: rgba(255,255,255,0.04); }
+
+        /* Right cluster */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+        }
+
+        /* Lang button */
+        .nav-lang-btn-wrap {
+            height: 58px;
+            display: flex;
+            align-items: center;
+            border-left: 1px solid var(--border-light);
+        }
+
+        /* Install button */
+        #nav-install-btn {
+            display: none; /* shown by JS when prompt available */
+            align-items: center;
+            gap: 0.5rem;
+            height: 58px;
+            padding: 0 1.4rem;
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            border: none;
+            font-size: 0.72rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.25s, opacity 0.25s;
+            white-space: nowrap;
+            border-left: 1px solid rgba(212,168,83,0.4);
+            pointer-events: auto;
+        }
+        #nav-install-btn:hover { background: #c49840; }
+        #nav-install-btn svg { width: 15px; height: 15px; fill: var(--bg-dark); flex-shrink: 0; }
+        #nav-install-btn.visible { display: flex; }
+
+        @media (max-width: 700px) {
+            nav { padding: 0 1rem; height: 52px; }
+            .nav-links { display: none; }
+            .nav-links a { height: 52px; }
+            .nav-brand-name { font-size: 0.9rem; }
+            /* Hide lang & install from nav on mobile — they live in ham menu */
+            .nav-lang-btn-wrap { display: none !important; }
+            #nav-install-btn { display: none !important; }
+        }
+
+        /* ========================================
+           HAMBURGER MENU — mobile only
+        ======================================== */
+        .ham-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: #F5C200;
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1002;
+            border-radius: 2px;
+        }
+        .ham-btn .ham-icon {
             display: flex;
-            gap: 2rem;
+            flex-direction: column;
+            gap: 5px;
+            width: 20px;
+        }
+        .ham-btn .ham-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            border-radius: 1px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .ham-btn.open .ham-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .ham-btn.open .ham-icon span:nth-child(2) { opacity: 0; }
+        .ham-btn.open .ham-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media (max-width: 700px) {
+            .ham-btn { display: flex; }
         }
 
-        .nav-pill a {
+        /* Ham drawer */
+        #ham-drawer {
+            display: none;
+            position: fixed;
+            top: 52px;
+            left: 0;
+            right: 0;
+            background: #0a0a0a;
+            border-bottom: 2px solid #F5C200;
+            z-index: 999;
+            padding: 0;
+            transform: translateY(-110%);
+            transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+        }
+        #ham-drawer.open {
+            transform: translateY(0);
+        }
+        @media (max-width: 700px) {
+            #ham-drawer { display: block; }
+        }
+        .ham-drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
             color: var(--text-light);
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            background: transparent;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            width: 100%;
+            text-align: left;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: background 0.2s;
         }
-        .nav-pill a:hover { color: var(--text-muted); }
-
-        @media (max-width: 600px) {
-            nav { top: 1rem; padding: 0 3vw; }
-            .nav-pill { padding: 0.6rem 1.2rem; gap: 1rem; font-size: 0.65rem; }
+        .ham-drawer-item:hover, .ham-drawer-item:active { background: rgba(245,194,0,0.08); }
+        .ham-drawer-item .ham-item-icon {
+            width: 32px;
+            height: 32px;
+            background: #F5C200;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ham-drawer-item .ham-item-icon svg { width: 16px; height: 16px; fill: #000; }
+        .ham-drawer-item .ham-item-icon .flag-emoji { font-size: 1.1rem; line-height: 1; }
+        .ham-drawer-divider {
+            height: 1px;
+            background: rgba(245,194,0,0.2);
+            margin: 0;
         }
 
         /* ========================================
@@ -159,11 +354,11 @@
         ======================================== */
         .giant-bg-text {
             position: absolute;
-            top: 50%;
+            top: 75%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: var(--font-serif);
-            font-size: 24vw;
+            font-size: 35vw;
             letter-spacing: -0.02em;
             white-space: nowrap;
             z-index: 1;
@@ -263,6 +458,26 @@
             height: 99vh;
             min-width: 300px;
         }
+        #hero-cursor-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+            left: var(--x, -999px);
+            top: var(--y, -999px);
+            mix-blend-mode: difference;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.25), 0 0 14px rgba(255,255,255,0.55);
+            transition: width 0.15s ease, height 0.15s ease, box-shadow 0.15s ease;
+        }
+        .hero-img-box:hover #hero-cursor-dot {
+            width: 14px;
+            height: 14px;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.3), 0 0 22px rgba(255,255,255,0.6);
+        }
         .hero-img-box img {
             position: absolute;
             inset: 0;
@@ -275,6 +490,30 @@
             z-index: 2;
             mask-image: radial-gradient(circle 160px at var(--x, 50%) var(--y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
             -webkit-mask-image: radial-gradient(circle 160px at var(--x, 50%) var(--y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        /* ---- MOBILE HERO ---- */
+        /* Desktop: show desktop imgs, hide mobile img */
+        .hero-mobile-only { display: none !important; }
+        .hero-desktop-only { display: block; }
+
+        /* Mobile: full-colour image, no B&W, no hover effect */
+        @media (max-width: 768px) {
+            .hero-desktop-only { display: none !important; }
+            .hero-mobile-only {
+                display: block !important;
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+                transform: scale(1.05);
+                filter: brightness(0.88) contrast(1.05);
+                z-index: 1;
+            }
+            #hero-cursor-dot { display: none !important; }
+            .hero-img-box { cursor: auto; }
         }
         .collage { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .collage img:nth-child(2) { transform: translateY(3rem); }
@@ -358,6 +597,65 @@
             transition: border-color 0.3s, transform 0.3s;
         }
         .tiktok-card:hover { border-color: var(--accent-gold); transform: translateY(-4px); }
+
+        /* ========================================
+           TIKTOK DESKTOP CAROUSEL — 4 visible, loop
+        ======================================== */
+        .tt-carousel-wrap {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -1rem;
+        }
+        .tt-carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+            padding: 0 1rem;
+        }
+        .tt-carousel-track .tiktok-card {
+            flex: 0 0 calc(25% - 1.15rem);
+            min-width: 0;
+            transform: none !important; /* disable hover lift inside carousel */
+        }
+        .tt-carousel-track .tiktok-card:hover { transform: translateY(-4px) !important; }
+        .tt-carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .tt-carousel-btn {
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .tt-carousel-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--accent-gold); }
+        .tt-carousel-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .tt-carousel-dots {
+            display: flex; gap: 0.5rem; align-items: center;
+        }
+        .tt-dot {
+            width: 6px; height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: background 0.25s, transform 0.25s;
+        }
+        .tt-dot.active { background: var(--accent-gold); transform: scale(1.4); }
+        /* On mobile, keep original grid layout */
+        @media (max-width: 900px) {
+            .tt-carousel-wrap { overflow: visible; margin: 0; }
+            .tt-carousel-track { flex-wrap: wrap; padding: 0; transition: none; }
+            .tt-carousel-track .tiktok-card { flex: 1 1 calc(50% - 0.75rem); }
+            .tt-carousel-nav { display: none; }
+        }
+        @media (max-width: 600px) {
+            .tt-carousel-track .tiktok-card { flex: 1 1 100%; }
+        }
 
         /* ========================================
            VIDEO FACADE (click-to-load)
@@ -708,6 +1006,322 @@
         }
 
         /* ========================================
+           SEEK HELP SECTION — MOBILE: full-image overlay
+           panel-sticky keeps position:sticky + height:100vh — do NOT override
+        ======================================== */
+        @media (max-width: 700px) {
+            /* Inner flex row stays as-is so absolute children position relative to it */
+            #section-5 > div { position: relative; }
+
+            /* Image fills the whole sticky frame */
+            #section-5-img-col {
+                position: absolute !important;
+                inset: 0 !important;
+                flex: none !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 1;
+            }
+
+            /* Text panel: sits on top, full width, vertically centred */
+            #section-5-text-col {
+                position: relative !important;
+                z-index: 2;
+                flex: 1 1 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                text-align: center !important;
+                padding: 5rem 2rem 3rem !important;
+                background: rgba(0,0,0,0.55) !important;
+            }
+            #section-5-text-col p,
+            #section-5-text-col h2 {
+                text-shadow: 0 1px 10px rgba(0,0,0,0.85);
+            }
+            #section-5-text-col h2 {
+                color: #fff !important;
+                font-size: clamp(1.6rem,6vw,2.4rem) !important;
+            }
+            #section-5-text-col p:not([style*="accent-red"]) {
+                color: rgba(255,255,255,0.85) !important;
+                max-width: 36ch;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* ========================================
+           SEEK HELP MODAL
+        ======================================== */
+        .seek-help-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 1.1rem 2.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 0 30px rgba(195,37,37,0.25);
+            margin-top: 1.5rem;
+            position: relative;
+        }
+        .seek-help-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border: 1px solid rgba(195,37,37,0.4);
+            pointer-events: none;
+        }
+        .seek-help-btn:hover {
+            background: #a31e1e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(195,37,37,0.4);
+        }
+        .seek-help-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            flex-shrink: 0;
+        }
+
+        /* Modal overlay */
+        #help-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        #help-modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        body.modal-open { overflow: hidden; }
+
+        .help-modal {
+            background: #111;
+            border: 1px solid rgba(195,37,37,0.3);
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(195,37,37,0.3) transparent;
+        }
+        #help-modal-overlay.open .help-modal {
+            transform: translateY(0) scale(1);
+        }
+        .help-modal::-webkit-scrollbar { width: 4px; }
+        .help-modal::-webkit-scrollbar-thumb { background: rgba(195,37,37,0.3); }
+
+        .help-modal-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+        .help-modal-eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            margin-bottom: 0.6rem;
+        }
+        .help-modal-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--text-light);
+            line-height: 1.2;
+        }
+        .help-modal-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .help-modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+        .help-modal-close:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .help-modal-body { padding: 1.8rem 2rem 2rem; }
+
+        /* Form fields */
+        .hf-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .hf-group label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+        }
+        .hf-input, .hf-select, .hf-textarea {
+            background: #1a1a1a;
+            border: 1px solid var(--border-light);
+            color: var(--text-light);
+            padding: 0.85rem 1rem;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            width: 100%;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .hf-input:focus, .hf-select:focus, .hf-textarea:focus {
+            border-color: var(--accent-red);
+        }
+        .hf-input::placeholder, .hf-textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 0.45;
+        }
+        .hf-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999691'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+        .hf-select option { background: #1a1a1a; }
+        .hf-textarea { resize: vertical; min-height: 80px; }
+
+        .hf-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 500px) {
+            .hf-row { grid-template-columns: 1fr; }
+            .help-modal-body { padding: 1.4rem 1.2rem 1.6rem; }
+            .help-modal-header { padding: 1.5rem 1.2rem 1.2rem; }
+        }
+
+        .hf-context-chips {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+        }
+        .hf-chip {
+            padding: 0.55rem 1.1rem;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-family: var(--font-sans);
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            text-transform: uppercase;
+        }
+        .hf-chip:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .hf-chip.selected {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #fff;
+        }
+
+        .hf-submit-btn {
+            width: 100%;
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 1.1rem 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            margin-top: 1.5rem;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .hf-submit-btn:hover { background: #a31e1e; transform: translateY(-1px); }
+        .hf-submit-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .hf-submit-btn svg { width: 16px; height: 16px; fill: white; }
+
+        .hf-success {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        .hf-success.show { display: block; }
+        .hf-success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hf-success h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+        .hf-success p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .hf-privacy {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+            text-align: center;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+
+        /* ========================================
            LANGUAGE PICKER SYSTEM
         ======================================== */
 
@@ -876,25 +1490,27 @@
         /* Navbar lang toggle */
         .nav-lang-btn {
             pointer-events: auto;
-            background: rgba(20,20,20,0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            padding: 0.7rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
+            background: transparent;
+            border: none;
+            padding: 0 1.2rem;
+            height: 58px;
+            font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--text-light);
+            color: var(--text-muted);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: border-color 0.3s;
+            transition: color 0.25s, background 0.25s;
             font-family: var(--font-sans);
+            white-space: nowrap;
         }
-        .nav-lang-btn:hover { border-color: var(--accent-gold); }
+        .nav-lang-btn:hover { color: var(--text-light); background: rgba(255,255,255,0.04); }
         .nav-lang-btn .flag { font-size: 1rem; }
+        @media (max-width: 700px) {
+            .nav-lang-btn { height: 52px; padding: 0 0.9rem; }
+        }
 
         /* Translation loading shimmer */
         .translating * {
@@ -928,6 +1544,343 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+        /* ========================================
+           PWA INSTALL WALKTHROUGH POPUP
+        ======================================== */
+        #pwa-install-popup {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(130%);
+            z-index: 9999;
+            width: min(400px, calc(100vw - 2rem));
+            background: #161616;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,168,83,0.12);
+            overflow: hidden;
+            opacity: 0;
+            transition: transform 0.44s cubic-bezier(0.34,1.52,0.64,1), opacity 0.28s ease;
+            pointer-events: none;
+        }
+        #pwa-install-popup.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        /* --- Header bar --- */
+        .pwaw-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.1rem 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .pwaw-app-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .pwaw-app-icon img { width: 44px; height: 44px; object-fit: cover; filter: none; }
+        .pwaw-header-text { flex: 1; min-width: 0; }
+        .pwaw-app-name {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.2;
+        }
+        .pwaw-app-tagline {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-top: 0.1rem;
+        }
+        .pwaw-close-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pwaw-close-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-light); }
+        .pwaw-close-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+        /* --- Step progress bar --- */
+        .pwaw-progress {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 0.7rem 1.1rem 0;
+        }
+        .pwaw-progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex: 1;
+        }
+        .pwaw-progress-step:last-child { flex: 0; }
+        .pwaw-step-dot {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .pwaw-step-dot.active {
+            border-color: var(--accent-gold);
+            background: rgba(212,168,83,0.15);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(212,168,83,0.1);
+        }
+        .pwaw-step-dot.done {
+            border-color: #4caf50;
+            background: rgba(76,175,80,0.15);
+            color: #4caf50;
+        }
+        .pwaw-step-dot.done::after {
+            content: '';
+            display: block;
+            width: 6px; height: 10px;
+            border-right: 2px solid #4caf50;
+            border-bottom: 2px solid #4caf50;
+            transform: rotate(45deg) translate(-1px, -1px);
+            position: absolute;
+        }
+        .pwaw-step-line {
+            flex: 1;
+            height: 1.5px;
+            background: rgba(255,255,255,0.1);
+            transition: background 0.4s ease;
+        }
+        .pwaw-step-line.done { background: rgba(76,175,80,0.5); }
+
+        /* --- Step label row --- */
+        .pwaw-step-labels {
+            display: flex;
+            padding: 0.3rem 1.1rem 0;
+        }
+        .pwaw-step-label {
+            flex: 1;
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .pwaw-step-label:last-child { flex: 0; min-width: 26px; }
+        .pwaw-step-label.active { color: var(--accent-gold); }
+        .pwaw-step-label.done { color: #4caf50; }
+
+        /* --- Step content panels --- */
+        .pwaw-steps-wrap {
+            overflow: hidden;
+        }
+        .pwaw-steps-inner {
+            display: flex;
+            transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pwaw-step-panel {
+            min-width: 100%;
+            padding: 1rem 1.1rem 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .pwaw-step-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.02em;
+        }
+        .pwaw-step-desc {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+        .pwaw-step-desc strong { color: var(--text-light); font-weight: 600; }
+        /* Visual hint mockup inside each step */
+        .pwaw-hint-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 0.7rem 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+        .pwaw-hint-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: rgba(212,168,83,0.12);
+            border: 1px solid rgba(212,168,83,0.25);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .pwaw-hint-icon svg { width: 17px; height: 17px; fill: var(--accent-gold); }
+        .pwaw-hint-text { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+        .pwaw-hint-text b { color: var(--text-light); }
+        /* success panel */
+        .pwaw-success-panel {
+            padding: 1.4rem 1.1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            text-align: center;
+        }
+        .pwaw-success-icon {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: rgba(76,175,80,0.12);
+            border: 1.5px solid rgba(76,175,80,0.4);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .pwaw-success-icon svg { width: 26px; height: 26px; fill: #4caf50; }
+        .pwaw-success-title {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: var(--text-light);
+        }
+        .pwaw-success-sub { font-size: 0.74rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- Bottom action bar --- */
+        .pwaw-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1.1rem 1rem;
+            align-items: center;
+        }
+        .pwaw-btn-back {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.73rem;
+            color: var(--text-muted);
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+        .pwaw-btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text-light); }
+        .pwaw-btn-next {
+            flex: 1;
+            background: var(--accent-gold);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            padding: 0.68rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .pwaw-btn-next:hover { background: #c49840; }
+        .pwaw-btn-next:active { transform: scale(0.98); }
+        .pwaw-btn-dismiss {
+            flex: 1;
+            background: rgba(255,255,255,0.06);
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.68rem 1rem;
+            font-size: 0.73rem;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pwaw-btn-dismiss:hover { background: rgba(255,255,255,0.1); color: var(--text-light); }
+        /* Chrome/Edge single-action variant */
+        .pwaw-btn-chrome {
+            flex: 1;
+            background: var(--accent-gold);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            padding: 0.68rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .pwaw-btn-chrome:hover { background: #c49840; }
+        /* Safari caret arrow at bottom */
+        #pwa-install-popup.safari-mode::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: 50%;
+            width: 13px; height: 13px;
+            background: #161616;
+            border-right: 1px solid rgba(255,255,255,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        /* ========================================
+           HERO SOCIAL ICONS — bottom centre
+        ======================================== */
+        .hero-socials {
+            position: absolute;
+            bottom: clamp(1.2rem, 4vh, 3rem);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: clamp(0.9rem, 4vw, 1.5rem);
+            z-index: 10;
+            pointer-events: all;
+            white-space: nowrap;
+        }
+        .hero-social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* fluid: 44px on 320px screen → 64px on 1440px */
+            width: clamp(44px, 10vw, 64px);
+            height: clamp(44px, 10vw, 64px);
+            border-radius: 50%;
+            background: var(--brand);
+            color: var(--brand-fg, #fff);
+            text-decoration: none;
+            transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, opacity 0.22s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            opacity: 0.95;
+            flex-shrink: 0;
+        }
+        .hero-social-icon:hover {
+            transform: translateY(-5px) scale(1.12);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+            opacity: 1;
+        }
+        .hero-social-icon svg {
+            /* icon = ~44% of circle, scales with it */
+            width: clamp(18px, 4.4vw, 28px);
+            height: clamp(18px, 4.4vw, 28px);
+            fill: var(--brand-fg, #fff);
+            filter: none;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -955,22 +1908,150 @@
 <!-- ====== LANG TOAST ====== -->
 <div id="lang-toast"></div>
 
-    <nav>
-        <div class="nav-pill" style="display:flex;align-items:center;gap:0.8rem;">
-            <img src="./imgs/logo.svg" alt="Amrik Singh Logo" width="22" height="22" style="height:22px;width:auto;opacity:0.9;filter:brightness(0) invert(1);" loading="eager" decoding="async">
-            <a href="#">&laquo; Amrik Singh</a>
+<!-- ====== SEEK HELP MODAL ====== -->
+<div id="help-modal-overlay" onclick="closeHelpModalOnOverlay(event)">
+    <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+
+        <div class="help-modal-header">
+            <p class="help-modal-eyebrow">Community Support Request</p>
+            <h2 class="help-modal-title" id="help-modal-title">How can we<br><em>help you?</em></h2>
+            <p class="help-modal-sub">Submit your request — Amrik Singh personally reviews every message. No bureaucracy, no cost. Just humanity.</p>
+            <button class="help-modal-close" onclick="closeHelpModal()" aria-label="Close">&times;</button>
         </div>
-        <div style="display:flex;gap:0.6rem;align-items:center;">
-            <button class="nav-lang-btn" id="nav-lang-btn" onclick="openLangOverlay()" title="Change language">
-                <span class="flag" id="nav-flag">🌐</span>
-                <span id="nav-lang-label">Language</span>
-            </button>
-            <div class="nav-pill">
-                <a href="#section-media" data-i18n="nav_videos">Videos</a>
-                <a href="#section-whatsapp" data-i18n="nav_message">Message</a>
+
+        <div class="help-modal-body" id="help-form-container">
+
+            <!-- Context / Topic Selection -->
+            <div class="hf-group">
+                <label>What do you need help with?</label>
+                <div class="hf-context-chips" id="hf-context-chips">
+                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Immigration">🛂 Immigration</button>
+                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Passport">📘 Passport</button>
+                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="PCC">🔏 PCC</button>
+                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Other">🤝 Other</button>
+                </div>
             </div>
+
+            <div class="hf-row">
+                <div class="hf-group">
+                    <label for="hf-name">Full Name *</label>
+                    <input class="hf-input" id="hf-name" type="text" placeholder="Your full name" autocomplete="name" required>
+                </div>
+                <div class="hf-group">
+                    <label for="hf-country">Country *</label>
+                    <select class="hf-select" id="hf-country" required>
+                        <option value="">— Select country —</option>
+                        <option>Spain</option>
+                        <option>India</option>
+                        <option>Pakistan</option>
+                        <option>United Kingdom</option>
+                        <option>France</option>
+                        <option>Germany</option>
+                        <option>Italy</option>
+                        <option>Portugal</option>
+                        <option>Canada</option>
+                        <option>USA</option>
+                        <option>Bangladesh</option>
+                        <option>Nepal</option>
+                        <option>Morocco</option>
+                        <option>Algeria</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="hf-group">
+                <label for="hf-address">Address</label>
+                <input class="hf-input" id="hf-address" type="text" placeholder="City, Region or full address" autocomplete="street-address">
+            </div>
+
+            <div class="hf-row">
+                <div class="hf-group">
+                    <label for="hf-passport">Passport Number</label>
+                    <input class="hf-input" id="hf-passport" type="text" placeholder="e.g. AB1234567" autocomplete="off">
+                </div>
+                <div class="hf-group">
+                    <label for="hf-phone">Contact Number *</label>
+                    <input class="hf-input" id="hf-phone" type="tel" placeholder="+34 600 000 000" autocomplete="tel" required>
+                </div>
+            </div>
+
+            <div class="hf-group">
+                <label for="hf-email">Email Address *</label>
+                <input class="hf-input" id="hf-email" type="email" placeholder="your@email.com" autocomplete="email" required>
+            </div>
+
+            <div class="hf-group">
+                <label for="hf-message">Describe your situation</label>
+                <textarea class="hf-textarea" id="hf-message" placeholder="Please briefly describe what help you need..."></textarea>
+            </div>
+
+            <button class="hf-submit-btn" id="hf-submit-btn" onclick="submitHelpForm()">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                Submit Request
+            </button>
+
+            <p class="hf-privacy">🔒 Your information is sent directly to Amrik Singh only. It is never shared or sold.</p>
+        </div>
+
+        <!-- Success state -->
+        <div class="hf-success" id="hf-success">
+            <div class="hf-success-icon">🙏</div>
+            <h3>Request Received</h3>
+            <p>Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh.<br><br>
+            Your request has been submitted. Amrik Singh will personally review your message and reach out to you soon. Thank you for trusting this community.</p>
+        </div>
+
+    </div>
+</div>
+
+    <nav>
+        <!-- Left: Brand -->
+        <a class="nav-brand" href="#">
+            <img src="./imgs/logo.svg" alt="Amrik Singh Logo" width="24" height="24" loading="eager" decoding="async">
+            <span class="nav-brand-name">Amrik Singh</span>
+        </a>
+
+        <!-- Center: Links -->
+        <div class="nav-links">
+            <a href="#section-media" data-i18n="nav_videos">Videos</a>
+            <a href="#section-whatsapp" data-i18n="nav_message">Message</a>
+            <a href="#section-5" data-i18n="s5_cta" onclick="openHelpModal();return false;">Seek Help</a>
+        </div>
+
+        <!-- Right: Lang + Install (desktop) + Hamburger (mobile) -->
+        <div class="nav-right">
+            <div class="nav-lang-btn-wrap">
+                <button class="nav-lang-btn" id="nav-lang-btn" onclick="openLangOverlay()" title="Change language">
+                    <span class="flag" id="nav-flag">🌐</span>
+                    <span id="nav-lang-label">Language</span>
+                </button>
+            </div>
+            <button id="nav-install-btn" onclick="triggerInstall()" title="Install App">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8h14v2H5z"/></svg>
+                <span class="install-label">Install App</span>
+            </button>
+            <!-- Hamburger — mobile only -->
+            <button class="ham-btn" id="ham-btn" aria-label="Menu" onclick="toggleHamMenu()">
+                <span class="ham-icon">
+                    <span></span><span></span><span></span>
+                </span>
+            </button>
         </div>
     </nav>
+
+    <!-- Ham Drawer (mobile only) -->
+    <div id="ham-drawer" role="menu" aria-label="Mobile menu">
+        <button class="ham-drawer-item" onclick="openLangOverlay(); closeHamMenu();">
+            <span class="ham-item-icon"><span class="flag-emoji" id="ham-flag">🌐</span></span>
+            <span data-i18n="nav_language">Language</span>
+        </button>
+        <div class="ham-drawer-divider"></div>
+        <button class="ham-drawer-item" id="ham-install-btn" onclick="triggerInstall(); closeHamMenu();" style="display:none;">
+            <span class="ham-item-icon"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8h14v2H5z"/></svg></span>
+            <span>Install App</span>
+        </button>
+    </div>
 
     <div class="main-wrapper">
 
@@ -978,8 +2059,28 @@
         <section class="panel-sticky" id="section-1">
             <div class="giant-bg-text" data-i18n="hero_word">SEVA</div>
             <div class="hero-img-box reveal active">
-                <img class="img-gray" src="./imgs/2/four.webp" alt="Amrik Singh" fetchpriority="high" decoding="sync">
-                <img class="img-color" src="./imgs/2/four.webp" alt="Amrik Singh colour" fetchpriority="high" decoding="sync">
+                <!-- DESKTOP: grayscale + hover colour reveal -->
+                <img class="img-gray hero-desktop-only" src="./imgs/2/four.webp" alt="Amrik Singh" fetchpriority="high" decoding="sync">
+                <img class="img-color hero-desktop-only" src="./imgs/2/four.webp" alt="Amrik Singh colour" fetchpriority="high" decoding="sync">
+                <!-- MOBILE: separate full-colour image, no effects -->
+                <img class="hero-mobile-only" src="./imgs/2/mobile-hero.webp" onerror="this.src='./imgs/2/four.webp'" alt="Amrik Singh" fetchpriority="high" decoding="sync">
+                <div id="hero-cursor-dot"></div>
+
+                <!-- Hero social icons — bottom centre -->
+                <div class="hero-socials">
+                    <a href="https://www.tiktok.com/@amrik.singh.spain" target="_blank" rel="noopener" class="hero-social-icon" aria-label="TikTok" style="--brand:#010101;--brand-fg:#fff">
+                        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.22a8.18 8.18 0 0 0 4.78 1.52V7.3a4.85 4.85 0 0 1-1.02-.61z"/></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@amriksinghspain" target="_blank" rel="noopener" class="hero-social-icon" aria-label="YouTube" style="--brand:#FF0000;--brand-fg:#fff">
+                        <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/amrik_singh_spain/" target="_blank" rel="noopener" class="hero-social-icon" aria-label="Instagram" style="--brand:radial-gradient(circle at 30% 110%,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);--brand-fg:#fff">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/p/Amrik-Singh-Spain-100053133901969/" target="_blank" rel="noopener" class="hero-social-icon" aria-label="Facebook" style="--brand:#1877F2;--brand-fg:#fff">
+                        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -1014,7 +2115,7 @@
             <div class="grid-2">
                 <div class="collage reveal">
                     <img src="imgs/2/singh.webp" alt="Food sharing detail 1" loading="lazy" decoding="async">
-                    <img src="https://picsum.photos/seed/amrik5/800/1000" alt="Food sharing detail 2" loading="lazy" decoding="async">
+                    <img src="imgs/2/helpin.webp" alt="Food sharing detail 2" loading="lazy" decoding="async">
                 </div>
                 <div class="reveal delay-1" style="padding-left:2vw;">
                     <h2 class="editorial-title" data-i18n="s4_title">Selfless Duty<br>Meets Crisis.</h2>
@@ -1026,19 +2127,50 @@
             </div>
         </section>
 
-        <!-- SECTION 5 -->
-        <section class="panel-sticky" id="section-5" style="align-items:center;justify-content:center;text-align:center;">
-            <div class="reveal" style="max-width:800px;">
-                <div class="editorial-number" style="font-size:6rem;"><span class="text-red">0</span>€</div>
-                <div class="crosshair-box" style="display:inline-block;text-align:left;margin:2rem 0 3rem 0;">
-                    <p class="editorial-body" style="text-align:center;max-width:60ch;" data-i18n="s5_p1">
-                        Offers of financial donations poured in from across the region. They were entirely refused. The mission was never about profit — it was about pure, unadulterated human connection and immediate physical action.
-                    </p>
+        <!-- SECTION 5 — Community Support: full-height split -->
+        <section class="panel-sticky" id="section-5" style="padding:0;overflow:hidden;">
+            <div style="display:flex;width:100%;height:100vh;">
+
+                <!-- LEFT: full-height image, swaps on button click -->
+                <div id="section-5-img-col" style="flex:0 0 50%;position:relative;overflow:hidden;background:#111;">
+                    <img id="seek-help-img"
+                         src="./imgs/seekhelp.webp"
+                         alt="Seek Help"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.82) contrast(1.08);transition:opacity 0.6s ease;">
+                    <img id="grabbed-help-img"
+                         src="./imgs/grabbedhelp.webp"
+                         alt="Help Grabbed"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.82) contrast(1.08);opacity:0;transition:opacity 0.6s ease;">
                 </div>
-                <br>
-                <a href="#section-media" class="btn-solid reveal delay-1" data-i18n="s5_btn">Watch His Story</a>
+
+                <!-- RIGHT: text + button, vertically centred -->
+                <div id="section-5-text-col" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:6vw 5vw;background:var(--bg-alt);">
+                    <p class="reveal" data-i18n="s5_label" style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-red);margin-bottom:1.2rem;">— Community Support</p>
+                    <h2 class="reveal delay-1" data-i18n="s5_title" style="font-family:var(--font-serif);font-size:clamp(1.8rem,3.5vw,3rem);color:var(--text-light);line-height:1.25;margin-bottom:1.5rem;">
+                        Need help with Immigration, Passport, or other urgent matters?
+                    </h2>
+                    <p class="reveal delay-1" data-i18n="s5_body" style="font-size:0.95rem;color:var(--text-muted);line-height:1.85;font-weight:300;max-width:42ch;margin-bottom:2.5rem;">
+                        Amrik Singh assists the community beyond crisis relief — reaching out to those navigating immigration procedures, passport renewals, and other official challenges. If you or someone you know needs guidance, submit a request and he will personally review it.
+                    </p>
+                    <div class="reveal delay-2">
+                        <button class="seek-help-btn" onclick="swapSeekHelpImage(); openHelpModal();">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                            <span data-i18n="s5_cta">Seek Help</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <script>
+        function swapSeekHelpImage() {
+            const seek = document.getElementById('seek-help-img');
+            const grabbed = document.getElementById('grabbed-help-img');
+            if (!seek || !grabbed) return;
+            seek.style.opacity = '0';
+            grabbed.style.opacity = '1';
+        }
+        </script>
 
         <!-- ========================================
              SECTION: MEDIA — Videos & Social
@@ -1070,6 +2202,10 @@
                             <p>YouTube • Shared via his TikTok profile</p>
                         </div>
                     </div>
+
+                    <!-- TikTok Carousel (desktop: 4-visible loop; mobile: grid) -->
+                    <div class="tt-carousel-wrap" id="tt-carousel-wrap" style="grid-column:1/-1;">
+                        <div class="tt-carousel-track" id="tt-carousel-track">
 
                     <!-- TikTok Video Card 1 -->
                     <div class="tiktok-card reveal delay-1">
@@ -1121,9 +2257,21 @@
                         <iframe id="tt-frame-5" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
-                </div><!-- /video-grid -->
+                        </div><!-- /tt-carousel-track -->
 
-                <!-- Social Links Row -->
+                        <!-- Carousel nav (desktop only) -->
+                        <div class="tt-carousel-nav">
+                            <button class="tt-carousel-btn" onclick="ttCarouselPrev()" aria-label="Previous">
+                                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                            </button>
+                            <div class="tt-carousel-dots" id="tt-dots"></div>
+                            <button class="tt-carousel-btn" onclick="ttCarouselNext()" aria-label="Next">
+                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                            </button>
+                        </div>
+                    </div><!-- /tt-carousel-wrap -->
+
+                </div><!-- /video-grid -->
                 <div class="social-links-row reveal">
                     <a href="https://www.tiktok.com/@amrik.singh.spain" target="_blank" rel="noopener" class="social-btn">
                         <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.22a8.18 8.18 0 0 0 4.78 1.52V7.3a4.85 4.85 0 0 1-1.02-.61z"/></svg>
@@ -1176,7 +2324,7 @@
 
                     <div class="wa-form-group">
                         <label for="wa-name" data-i18n="wa_label_name">Your Name</label>
-                        <input class="wa-input" id="wa-name" type="text" placeholder="e.g. Priya Sharma" autocomplete="off" oninput="buildMessage()">
+                        <input class="wa-input" id="wa-name" type="text" placeholder="e.g. Your Name" autocomplete="off" oninput="buildMessage()">
                     </div>
 
                     <div class="wa-form-group">
@@ -1257,6 +2405,120 @@
         </footer>
 
     </div><!-- /main-wrapper -->
+
+<!-- ===== PWA INSTALL WALKTHROUGH POPUP ===== -->
+<div id="pwa-install-popup" role="dialog" aria-label="Install App">
+
+    <!-- Header -->
+    <div class="pwaw-header">
+        <div class="pwaw-app-icon">
+            <img src="./icons/icon-192.png" alt="Amrik Singh">
+        </div>
+        <div class="pwaw-header-text">
+            <div class="pwaw-app-name">Amrik Singh</div>
+            <div class="pwaw-app-tagline" id="pwaw-tagline">Add to Home Screen</div>
+        </div>
+        <button class="pwaw-close-btn" onclick="dismissInstallPopup()" aria-label="Close">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+    </div>
+
+    <!-- Step progress (Safari/iOS walkthrough only) -->
+    <div id="pwaw-progress-wrap">
+        <div class="pwaw-progress">
+            <div class="pwaw-progress-step">
+                <div class="pwaw-step-dot active" id="pwaw-dot-0">1</div>
+                <div class="pwaw-step-line" id="pwaw-line-0"></div>
+            </div>
+            <div class="pwaw-progress-step">
+                <div class="pwaw-step-dot" id="pwaw-dot-1">2</div>
+                <div class="pwaw-step-line" id="pwaw-line-1"></div>
+            </div>
+            <div class="pwaw-progress-step">
+                <div class="pwaw-step-dot" id="pwaw-dot-2">3</div>
+            </div>
+        </div>
+        <div class="pwaw-step-labels">
+            <div class="pwaw-step-label active" id="pwaw-lbl-0">Share</div>
+            <div class="pwaw-step-label" id="pwaw-lbl-1">Add</div>
+            <div class="pwaw-step-label" id="pwaw-lbl-2">Done</div>
+        </div>
+    </div>
+
+    <!-- Sliding step panels -->
+    <div class="pwaw-steps-wrap" id="pwaw-steps-wrap">
+        <div class="pwaw-steps-inner" id="pwaw-steps-inner">
+
+            <!-- Panel 0 — Chrome/Edge one-tap -->
+            <div class="pwaw-step-panel" id="pwaw-panel-chrome">
+                <div class="pwaw-step-title">Install the app</div>
+                <div class="pwaw-step-desc">Get quick access with the full app experience — no browser bar, faster load, works offline.</div>
+                <div class="pwaw-hint-box">
+                    <div class="pwaw-hint-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8h14v2H5z"/></svg>
+                    </div>
+                    <div class="pwaw-hint-text">Tap <b>Install App</b> and confirm in the popup that appears</div>
+                </div>
+            </div>
+
+            <!-- Panel 1 — Safari Step 1: tap Share -->
+            <div class="pwaw-step-panel" id="pwaw-panel-s0">
+                <div class="pwaw-step-title">Tap the Share button</div>
+                <div class="pwaw-step-desc">Look for the <strong>Share</strong> icon at the bottom of your Safari screen.</div>
+                <div class="pwaw-hint-box">
+                    <div class="pwaw-hint-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 5l-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.11 0-2-.9-2-2V10c0-1.11.89-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .89 2 2z"/></svg>
+                    </div>
+                    <div class="pwaw-hint-text">The <b>Share</b> button is the box with an arrow pointing up, in Safari's bottom toolbar</div>
+                </div>
+            </div>
+
+            <!-- Panel 2 — Safari Step 2: tap Add to Home Screen -->
+            <div class="pwaw-step-panel" id="pwaw-panel-s1">
+                <div class="pwaw-step-title">Tap "Add to Home Screen"</div>
+                <div class="pwaw-step-desc">In the Share menu that slides up, scroll down until you see <strong>Add to Home Screen</strong>.</div>
+                <div class="pwaw-hint-box">
+                    <div class="pwaw-hint-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                    </div>
+                    <div class="pwaw-hint-text">Scroll the Share sheet and tap <b>Add to Home Screen</b> — it has a plus icon</div>
+                </div>
+            </div>
+
+            <!-- Panel 3 — Safari Step 3: tap Add -->
+            <div class="pwaw-step-panel" id="pwaw-panel-s2">
+                <div class="pwaw-step-title">Tap "Add" to confirm</div>
+                <div class="pwaw-step-desc">iOS shows a preview with the app name. Tap <strong>Add</strong> in the top-right corner.</div>
+                <div class="pwaw-hint-box">
+                    <div class="pwaw-hint-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </div>
+                    <div class="pwaw-hint-text">After tapping <b>Add</b>, the app icon appears on your home screen — you're done!</div>
+                </div>
+            </div>
+
+            <!-- Panel 4 — Success -->
+            <div class="pwaw-step-panel" id="pwaw-panel-done" style="padding-top:0;padding-bottom:0;">
+                <div class="pwaw-success-panel">
+                    <div class="pwaw-success-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </div>
+                    <div class="pwaw-success-title">You're all set!</div>
+                    <div class="pwaw-success-sub">The app is now on your home screen. Open it anytime for the full experience.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="pwaw-actions" id="pwaw-actions">
+        <button class="pwaw-btn-back" id="pwaw-btn-back" onclick="pwawBack()" style="display:none">Back</button>
+        <button class="pwaw-btn-next" id="pwaw-btn-next" onclick="pwawNext()">Install App</button>
+        <button class="pwaw-btn-dismiss" onclick="dismissInstallPopup()">Not Now</button>
+    </div>
+
+</div>
 
 <script>
 /* =============================================
@@ -1347,6 +2609,10 @@ const EN = {
   s4_p2:        'Distribution lines were organized seamlessly. Tons of fresh vegetables and vital supplies found their way to those who had lost everything, proving that true royalty lies in serving others.',
   s5_p1:        'Offers of financial donations poured in from across the region. They were entirely refused. The mission was never about profit — it was about pure, unadulterated human connection and immediate physical action.',
   s5_btn:       'Watch His Story',
+  s5_label:     '— Community Support',
+  s5_title:     'Need help with Immigration, Passport, or other urgent matters?',
+  s5_body:      'Amrik Singh assists the community beyond crisis relief — reaching out to those navigating immigration procedures, passport renewals, and other official challenges. If you or someone you know needs guidance, submit a request and he will personally review it.',
+  s5_cta:       'Seek Help',
   media_label:  '— Videos & Media',
   media_title:  'Watch & Follow Along.',
   media_sub:    'From TikTok to YouTube, Amrik Singh documents life, service, and Sikh culture in Spain with 227K+ followers and 6.8M likes.',
@@ -1670,36 +2936,510 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('lang-open');
     setTimeout(() => { overlay.classList.add('hidden'); overlay.style.display = 'none'; }, 400);
   } else {
-    // First visit — show the beautiful picker overlay, lock scroll
-    selectedLang = null;
-    document.body.classList.add('lang-open');
+    // First visit or no preference — default to English, skip overlay
+    document.getElementById('nav-flag').textContent = '🇬🇧';
+    document.getElementById('nav-lang-label').textContent = 'English';
+    currentLang = 'en';
+    selectedLang = 'en';
+    localStorage.setItem('amrik_lang', 'en');
+    const overlay = document.getElementById('lang-overlay');
+    overlay.classList.add('fade-out');
+    document.body.classList.remove('lang-open');
+    setTimeout(() => { overlay.classList.add('hidden'); overlay.style.display = 'none'; }, 400);
   }
 });
 
 /* =============================================
-   HERO COLOUR REVEAL
+   PWA — SERVICE WORKER REGISTRATION
 ============================================= */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.warn('SW registration failed:', err));
+  });
+}
+
+/* =============================================
+   PWA — INSTALL WALKTHROUGH (Chrome + Safari/iOS)
+============================================= */
+let _deferredInstallPrompt = null;
+let _pwawMode = 'chrome'; // 'chrome' | 'safari'
+let _pwawStep = 0;        // current slide index (safari: 0-2, plus done panel)
+
+/* ---- Detection helpers ---- */
+function _isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         window.navigator.standalone === true;
+}
+function _isSafari() {
+  const ua = navigator.userAgent;
+  return /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|EdgA|OPiOS/i.test(ua);
+}
+function _isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+function _snoozeActive() {
+  const d = localStorage.getItem('pwa_dismissed');
+  return d && (Date.now() - Number(d)) < 3 * 24 * 60 * 60 * 1000;
+}
+
+/* ---- Slide engine ---- */
+const SAFARI_PANELS = ['pwaw-panel-s0','pwaw-panel-s1','pwaw-panel-s2','pwaw-panel-done'];
+
+function _slideTo(idx) {
+  // Panels order in DOM: chrome(0), s0(1), s1(2), s2(3), done(4)
+  // Safari slides: offset 1 (panel index = idx+1), chrome stays at 0
+  const panelIdx = _pwawMode === 'safari' ? idx + 1 : 0;
+  document.getElementById('pwaw-steps-inner').style.transform =
+    `translateX(-${panelIdx * 100}%)`;
+}
+
+function _updateProgress(step) {
+  // step 0-2 = safari steps, step 3 = done
+  for (let i = 0; i < 3; i++) {
+    const dot = document.getElementById('pwaw-dot-' + i);
+    const lbl = document.getElementById('pwaw-lbl-' + i);
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    lbl.classList.remove('active', 'done');
+    if (i < step) {
+      dot.classList.add('done');
+      dot.textContent = '';
+      lbl.classList.add('done');
+    } else if (i === step) {
+      dot.classList.add('active');
+      dot.textContent = i + 1;
+      lbl.classList.add('active');
+    } else {
+      dot.textContent = i + 1;
+    }
+    if (i < 2) {
+      const line = document.getElementById('pwaw-line-' + i);
+      if (line) line.classList.toggle('done', i < step);
+    }
+  }
+}
+
+function _updateButtons() {
+  const back  = document.getElementById('pwaw-btn-back');
+  const next  = document.getElementById('pwaw-btn-next');
+  const actEl = document.getElementById('pwaw-actions');
+  if (!next) return;
+  if (_pwawMode === 'chrome') {
+    back.style.display = 'none';
+    next.textContent = 'Install App';
+    next.className = 'pwaw-btn-chrome';
+    next.style.flex = '1';
+    return;
+  }
+  // Safari steps
+  back.style.display = _pwawStep > 0 ? 'block' : 'none';
+  const isDone = _pwawStep >= 3;
+  if (isDone) {
+    next.textContent = 'Done';
+    actEl.querySelector('.pwaw-btn-dismiss').style.display = 'none';
+  } else {
+    const labels = ['Open Share menu','Tap Add to Home Screen','Tap Add to confirm'];
+    next.textContent = labels[_pwawStep] || 'Next';
+    next.className = 'pwaw-btn-next';
+    actEl.querySelector('.pwaw-btn-dismiss').style.display = '';
+  }
+}
+
+/* ---- Next / Back ---- */
+function pwawNext() {
+  if (_pwawMode === 'chrome') {
+    triggerInstallFromPopup();
+    return;
+  }
+  if (_pwawStep >= 3) { hideInstallPopup(); return; }
+  _pwawStep++;
+  _slideTo(_pwawStep);
+  _updateProgress(Math.min(_pwawStep, 2));
+  _updateButtons();
+}
+
+function pwawBack() {
+  if (_pwawStep <= 0) return;
+  _pwawStep--;
+  _slideTo(_pwawStep);
+  _updateProgress(_pwawStep);
+  _updateButtons();
+}
+
+/* ---- Show / Hide ---- */
+function showInstallPopup(mode) {
+  _pwawMode = mode;
+  _pwawStep = 0;
+  const popup = document.getElementById('pwa-install-popup');
+  const progressWrap = document.getElementById('pwaw-progress-wrap');
+  if (!popup) return;
+  // Show/hide progress bar
+  progressWrap.style.display = mode === 'safari' ? 'block' : 'none';
+  // Safari mode: add caret + slide to step panel 0
+  if (mode === 'safari') {
+    popup.classList.add('safari-mode');
+    document.getElementById('pwaw-tagline').textContent = '3-step walkthrough';
+    _slideTo(0);
+    _updateProgress(0);
+  } else {
+    popup.classList.remove('safari-mode');
+    document.getElementById('pwaw-tagline').textContent = 'Install the app';
+    _slideTo(0); // chrome panel
+  }
+  _updateButtons();
+  popup.classList.add('show');
+}
+
+function hideInstallPopup() {
+  const popup = document.getElementById('pwa-install-popup');
+  if (popup) popup.classList.remove('show');
+  const btn = document.getElementById('nav-install-btn');
+  if (btn) btn.classList.remove('visible');
+}
+
+function dismissInstallPopup() {
+  hideInstallPopup();
+  localStorage.setItem('pwa_dismissed', Date.now());
+}
+
+/* ---- Nav button ---- */
+function triggerInstall() {
+  if (_deferredInstallPrompt) {
+    showInstallPopup('chrome');
+  } else if (_isSafari() || _isIOS()) {
+    showInstallPopup('safari');
+  }
+}
+
+/* ---- Chrome/Edge install trigger ---- */
+function triggerInstallFromPopup() {
+  if (!_deferredInstallPrompt) return;
+  _deferredInstallPrompt.prompt();
+  _deferredInstallPrompt.userChoice.then(choice => {
+    if (choice.outcome === 'accepted') {
+      // slide to done
+      _pwawMode = 'safari'; // reuse done panel trick
+      _pwawStep = 3;
+      document.getElementById('pwaw-steps-inner').style.transform = 'translateX(-400%)';
+      document.getElementById('pwaw-progress-wrap').style.display = 'none';
+      _updateButtons();
+      setTimeout(hideInstallPopup, 2800);
+    }
+    _deferredInstallPrompt = null;
+  });
+}
+
+/* ---- beforeinstallprompt (Chrome/Edge/Android) ---- */
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+  const btn = document.getElementById('nav-install-btn');
+  if (btn) btn.classList.add('visible');
+  if (_isStandalone() || _snoozeActive()) return;
+  setTimeout(() => showInstallPopup('chrome'), 2500);
+});
+
+/* ---- appinstalled ---- */
+window.addEventListener('appinstalled', () => {
+  _deferredInstallPrompt = null;
+  hideInstallPopup();
+  localStorage.removeItem('pwa_dismissed');
+});
+
+/* ---- Safari/iOS auto-show ---- */
+(function initSafariPrompt() {
+  if (!(_isSafari() || _isIOS())) return;
+  if (_isStandalone() || _snoozeActive()) return;
+  const btn = document.getElementById('nav-install-btn');
+  if (btn) btn.classList.add('visible');
+  setTimeout(() => showInstallPopup('safari'), 2800);
+})();
+
+/* =============================================
+   SEEK HELP MODAL
+============================================= */
+let selectedHelpContext = '';
+
+function openHelpModal() {
+  document.getElementById('help-modal-overlay').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeHelpModal() {
+  document.getElementById('help-modal-overlay').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+function closeHelpModalOnOverlay(e) {
+  if (e.target === document.getElementById('help-modal-overlay')) {
+    closeHelpModal();
+  }
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeHelpModal();
+});
+
+function selectChip(btn) {
+  document.querySelectorAll('.hf-chip').forEach(c => c.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedHelpContext = btn.dataset.value;
+}
+
+function submitHelpForm() {
+  const name     = document.getElementById('hf-name').value.trim();
+  const phone    = document.getElementById('hf-phone').value.trim();
+  const email    = document.getElementById('hf-email').value.trim();
+  const country  = document.getElementById('hf-country').value;
+
+  if (!name || !phone || !email || !country) {
+    // Highlight required fields
+    ['hf-name','hf-phone','hf-email','hf-country'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = 'var(--accent-red)';
+        setTimeout(() => el.style.borderColor = '', 2500);
+      }
+    });
+    return;
+  }
+
+  const address  = document.getElementById('hf-address').value.trim();
+  const passport = document.getElementById('hf-passport').value.trim();
+  const message  = document.getElementById('hf-message').value.trim();
+  const context  = selectedHelpContext || 'Other';
+
+  // -------------------------------------------------------
+  // Google Form submission via hidden iframe trick
+  // (No backend needed — fully static)
+  //
+  // HOW TO SET UP YOUR GOOGLE FORM:
+  // 1. Create a Google Form with these fields:
+  //    - Context (short answer)
+  //    - Name (short answer)
+  //    - Address (short answer)
+  //    - Country (short answer)
+  //    - Passport Number (short answer)
+  //    - Contact Number (short answer)
+  //    - Email (short answer)
+  //    - Message (paragraph)
+  // 2. Get the form ID from the URL:
+  //    https://docs.google.com/forms/d/e/FORM_ID/viewform
+  // 3. Get the entry IDs by inspecting the form or using
+  //    "Get pre-filled link" from the form's 3-dot menu
+  // 4. Replace GOOGLE_FORM_ID and entry.XXXXXXXX below
+  // -------------------------------------------------------
+  const FORM_ID = '1FAIpQLSfUT3Oq2GfAzotynTaOjD0rFmlu0YOnxYdH1-FZesDnuGMMNw';
+
+  // Google Form entry IDs mapped to form fields
+  const params = new URLSearchParams({
+    'entry.1437668908': context,
+    'entry.332260706':  name,
+    'entry.1677880857': address,
+    'entry.1055226351': country,
+    'entry.1353750318': passport,
+    'entry.2101488096': phone,
+    'entry.298641650':  email,
+    'entry.236588459':  message,
+  });
+
+  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?${params.toString()}`;
+
+  // Submit silently via hidden iframe (no redirect, no CORS issue)
+  const iframe = document.createElement('iframe');
+  iframe.name = 'hidden-help-iframe';
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const btn = document.getElementById('hf-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>Sending…</span>';
+
+  // Create a hidden form pointing to the iframe
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = formUrl;
+  form.target = 'hidden-help-iframe';
+  form.style.display = 'none';
+
+  // POST fields
+  [
+    ['entry.1437668908', context],
+    ['entry.332260706',  name],
+    ['entry.1677880857', address],
+    ['entry.1055226351', country],
+    ['entry.1353750318', passport],
+    ['entry.2101488096', phone],
+    ['entry.298641650',  email],
+    ['entry.236588459',  message],
+  ].forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = k;
+    input.value = v;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // Show success after a short delay
+  setTimeout(() => {
+    document.getElementById('help-form-container').style.display = 'none';
+    document.getElementById('hf-success').classList.add('show');
+    // Auto-close after 5 seconds
+    setTimeout(() => closeHelpModal(), 5000);
+  }, 800);
+}
+
+/* =============================================
+   HAMBURGER MENU
+============================================= */
+function toggleHamMenu() {
+  const btn = document.getElementById('ham-btn');
+  const drawer = document.getElementById('ham-drawer');
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) {
+    closeHamMenu();
+  } else {
+    btn.classList.add('open');
+    drawer.classList.add('open');
+  }
+}
+function closeHamMenu() {
+  document.getElementById('ham-btn').classList.remove('open');
+  document.getElementById('ham-drawer').classList.remove('open');
+}
+// Sync the flag emoji in the ham drawer with nav
+document.addEventListener('DOMContentLoaded', () => {
+  const navFlag = document.getElementById('nav-flag');
+  const hamFlag = document.getElementById('ham-flag');
+  if (navFlag && hamFlag) {
+    const obs = new MutationObserver(() => { hamFlag.textContent = navFlag.textContent; });
+    obs.observe(navFlag, { childList: true, subtree: true, characterData: true });
+    hamFlag.textContent = navFlag.textContent;
+  }
+  // Show install button in ham drawer when the main one is visible
+  const mainInstall = document.getElementById('nav-install-btn');
+  const hamInstall = document.getElementById('ham-install-btn');
+  if (mainInstall && hamInstall) {
+    const installObs = new MutationObserver(() => {
+      hamInstall.style.display = mainInstall.classList.contains('visible') ? 'flex' : 'none';
+    });
+    installObs.observe(mainInstall, { attributes: true, attributeFilter: ['class'] });
+  }
+});
+// Close ham drawer when clicking outside
+document.addEventListener('click', e => {
+  const btn = document.getElementById('ham-btn');
+  const drawer = document.getElementById('ham-drawer');
+  if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) {
+    closeHamMenu();
+  }
+});
+
+/* =============================================
+   TIKTOK CAROUSEL — Desktop 4-visible loop
+============================================= */
+(function() {
+  const VISIBLE = 4; // cards visible at once on desktop
+  let ttIndex = 0;
+  let ttTotal = 0;
+  let ttTrack = null;
+  let isDeskTop = () => window.innerWidth > 900;
+
+  function ttInit() {
+    ttTrack = document.getElementById('tt-carousel-track');
+    if (!ttTrack) return;
+    const cards = ttTrack.querySelectorAll('.tiktok-card');
+    ttTotal = cards.length;
+    buildDots();
+    ttRender();
+  }
+
+  function buildDots() {
+    const dotsEl = document.getElementById('tt-dots');
+    if (!dotsEl) return;
+    dotsEl.innerHTML = '';
+    const pages = ttTotal - VISIBLE + 1; // positions: 0…(total-visible)
+    for (let i = 0; i < pages; i++) {
+      const d = document.createElement('span');
+      d.className = 'tt-dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => { ttIndex = i; ttRender(); };
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function ttRender() {
+    if (!ttTrack || !isDeskTop()) return;
+    const cards = ttTrack.querySelectorAll('.tiktok-card');
+    const cardEl = cards[0];
+    if (!cardEl) return;
+    const gap = 24; // 1.5rem gap
+    const wrapW = ttTrack.parentElement.offsetWidth - 32; // subtract padding
+    const cardW = (wrapW - gap * (VISIBLE - 1)) / VISIBLE;
+    const offset = ttIndex * (cardW + gap);
+    ttTrack.style.transform = `translateX(-${offset}px)`;
+    // update dots
+    document.querySelectorAll('.tt-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === ttIndex);
+    });
+  }
+
+  window.ttCarouselNext = function() {
+    if (!isDeskTop()) return;
+    const maxIndex = ttTotal - VISIBLE;
+    ttIndex = ttIndex >= maxIndex ? 0 : ttIndex + 1; // loop
+    ttRender();
+  };
+  window.ttCarouselPrev = function() {
+    if (!isDeskTop()) return;
+    const maxIndex = ttTotal - VISIBLE;
+    ttIndex = ttIndex <= 0 ? maxIndex : ttIndex - 1; // loop
+    ttRender();
+  };
+
+  // Reset on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!isDeskTop()) {
+        if (ttTrack) ttTrack.style.transform = '';
+      } else {
+        ttRender();
+      }
+    }, 100);
+  });
+
+  document.addEventListener('DOMContentLoaded', ttInit);
+})();
+
 const box = document.querySelector('.hero-img-box');
+const heroDot = document.getElementById('hero-cursor-dot');
 if (box) {
+  function setHeroPos(x, y) {
+    box.style.setProperty('--x', x + 'px');
+    box.style.setProperty('--y', y + 'px');
+    if (heroDot) {
+      heroDot.style.left = x + 'px';
+      heroDot.style.top  = y + 'px';
+    }
+  }
   box.addEventListener('mousemove', e => {
     const r = box.getBoundingClientRect();
-    box.style.setProperty('--x', `${e.clientX - r.left}px`);
-    box.style.setProperty('--y', `${e.clientY - r.top}px`);
+    setHeroPos(e.clientX - r.left, e.clientY - r.top);
   });
-  window.addEventListener('load', () => {
-    const r = box.getBoundingClientRect();
-    const cy = r.height / 2, sx = r.width * 0.2, ex = r.width * 0.8;
-    const dur = 1200, t0 = performance.now();
-    function animate(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      const e = 0.5 - Math.cos(p * Math.PI) / 2;
-      box.style.setProperty('--x', `${sx + (ex - sx) * e}px`);
-      box.style.setProperty('--y', `${cy}px`);
-      if (p < 1) requestAnimationFrame(animate);
-      else { box.style.setProperty('--x','-9999px'); box.style.setProperty('--y','-9999px'); }
-    }
-    setTimeout(() => requestAnimationFrame(animate), 800);
+  box.addEventListener('mouseleave', () => {
+    box.style.setProperty('--x', '-9999px');
+    box.style.setProperty('--y', '-9999px');
+    if (heroDot) { heroDot.style.left = '-9999px'; heroDot.style.top = '-9999px'; }
   });
+
 }
 
 /* =============================================
