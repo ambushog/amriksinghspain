@@ -1944,7 +1944,7 @@
                         <option value="">— Select country —</option>
                         <option>Spain</option>
                         <option>India</option>
-             
+                        <option>Pakistan</option>
                         <option>United Kingdom</option>
                         <option>France</option>
                         <option>Germany</option>
@@ -1978,7 +1978,7 @@
             </div>
 
             <div class="hf-group">
-                <label for="hf-email">Email Address </label>
+                <label for="hf-email">Email Address *</label>
                 <input class="hf-input" id="hf-email" type="email" placeholder="your@email.com" autocomplete="email" required>
             </div>
 
@@ -3236,19 +3236,7 @@ function submitHelpForm() {
   // -------------------------------------------------------
   const FORM_ID = '1FAIpQLSfUT3Oq2GfAzotynTaOjD0rFmlu0YOnxYdH1-FZesDnuGMMNw';
 
-  // Google Form entry IDs mapped to form fields
-  const params = new URLSearchParams({
-    'entry.1437668908': context,
-    'entry.332260706':  name,
-    'entry.1677880857': address,
-    'entry.1055226351': country,
-    'entry.1353750318': passport,
-    'entry.2101488096': phone,
-    'entry.298641650':  email,
-    'entry.236588459':  message,
-  });
-
-  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?${params.toString()}`;
+  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
 
   // Submit silently via hidden iframe (no redirect, no CORS issue)
   const iframe = document.createElement('iframe');
