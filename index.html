@@ -3431,7 +3431,8 @@ function submitHelpForm() {
   const address  = document.getElementById('hf-address').value.trim();
   const passport = document.getElementById('hf-passport').value.trim();
   const message  = document.getElementById('hf-message').value.trim();
-  const context  = selectedHelpContext || 'Other';
+  const need    = document.getElementById('hf-need');    
+const context = (need && need.value) ? need.value : (selectedHelpContext || 'Other');
 
   // -------------------------------------------------------
   // Google Form submission via hidden iframe trick
