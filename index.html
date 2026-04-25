@@ -200,6 +200,23 @@
         }
         .nav-links a:first-child { border-left: 1px solid var(--border-light); }
         .nav-links a:hover { color: var(--text-light); background: rgba(255,255,255,0.04); }
+        /* Humanitarian Help — highlighted CTA link in nav */
+        .nav-links a.nav-help-cta {
+            color: #fff;
+            background: var(--accent-red);
+            border-right-color: rgba(195,37,37,0.5);
+            font-weight: 600;
+            gap: 0.4rem;
+        }
+        .nav-links a.nav-help-cta:hover { background: #a31e1e; color: #fff; }
+        .nav-help-dot {
+            width: 5px; height: 5px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+            display: inline-block;
+        }
 
         /* Right cluster */
         .nav-right {
@@ -287,7 +304,9 @@
         .ham-btn.open .ham-icon span:nth-child(2) { opacity: 0; }
         .ham-btn.open .ham-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         @media (max-width: 700px) {
-            .ham-btn { display: flex; }
+            .ham-btn { display: flex; };
+                    .hero-socials { bottom: clamp(48.2rem, 4vh, 3rem)!important;
+                    }
         }
 
         /* Ham drawer */
@@ -810,6 +829,11 @@
             transition: border-color 0.3s;
         }
         .wa-select:focus { border-color: var(--accent-gold); }
+        /* Mobile: ensure option text is always visible */
+        .wa-select option {
+            background: #1a1a1a;
+            color: #F4F0EA;
+        }
 
         .wa-preview-box {
             grid-column: 1 / -1;
@@ -1007,7 +1031,7 @@
         }
 
         /* ========================================
-           Humanity help SECTION — MOBILE: full-image overlay
+           Humanitarian Help SECTION — MOBILE: full-image overlay
            panel-sticky keeps position:sticky + height:100vh — do NOT override
         ======================================== */
         @media (max-width: 700px) {
@@ -1054,7 +1078,7 @@
         }
 
         /* ========================================
-           Humanity help MODAL
+           Humanitarian Help MODAL
         ======================================== */
         .seek-help-btn {
             display: inline-flex;
@@ -1839,6 +1863,98 @@
         }
 
         /* ========================================
+           SEEK HELP — Priority Notice Bar
+        ======================================== */
+        #seek-help-notice {
+            position: fixed;
+            top: 58px;
+            left: 0;
+            right: 0;
+            z-index: 990;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(90deg, rgba(10,10,10,0.97) 0%, rgba(20,10,10,0.97) 50%, rgba(10,10,10,0.97) 100%);
+            border-bottom: 1px solid rgba(195,37,37,0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: noticeSlideIn 0.6s 1.2s cubic-bezier(0.16,1,0.3,1) both;
+            pointer-events: all;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        @keyframes noticeSlideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+        #seek-help-notice.dismissed {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .notice-dot {
+            width: 7px; height: 7px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse 2s infinite;
+        }
+        .notice-text {
+            font-size: 0.72rem;
+            color: rgba(244,240,234,0.75);
+            letter-spacing: 0.06em;
+            font-family: var(--font-sans);
+            white-space: nowrap;
+        }
+        .notice-text strong {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .notice-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 0.4rem 1rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            transition: background 0.25s, transform 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .notice-cta:hover { background: #a31e1e; transform: translateY(-1px); }
+        .notice-cta svg { width: 13px; height: 13px; fill: white; flex-shrink: 0; }
+        .notice-dismiss {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.25);
+            cursor: pointer;
+            padding: 0.2rem 0.1rem;
+            line-height: 1;
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+            margin-left: 0.2rem;
+        }
+        .notice-dismiss:hover { color: rgba(255,255,255,0.6); }
+        @media (max-width: 700px) {
+            #seek-help-notice {
+                top: 52px;
+                gap: 0.55rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .notice-text { font-size: 0.63rem; }
+            .notice-long { display: none; }
+        }
+
+        /* ========================================
            HERO SOCIAL ICONS — bottom centre
         ======================================== */
         .hero-socials {
@@ -1909,7 +2025,7 @@
 <!-- ====== LANG TOAST ====== -->
 <div id="lang-toast"></div>
 
-<!-- ====== Humanity help MODAL ====== -->
+<!-- ====== Humanitarian Help MODAL ====== -->
 <div id="help-modal-overlay" onclick="closeHelpModalOnOverlay(event)">
     <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
 
@@ -2020,7 +2136,7 @@
         <div class="nav-links">
             <a href="#section-media" data-i18n="nav_videos">Videos</a>
             <a href="#section-whatsapp" data-i18n="nav_message">Message</a>
-            <a href="#section-5" data-i18n="s5_cta" onclick="openHelpModal();return false;">Humanity help</a>
+            <a href="#section-5" class="nav-help-cta" data-i18n="s5_cta" onclick="openHelpModal();return false;"><span class="nav-help-dot"></span>Humanitarian Help</a>
         </div>
 
         <!-- Right: Lang + Install (desktop) + Hamburger (mobile) -->
@@ -2046,6 +2162,27 @@
 
     <!-- Ham Drawer (mobile only) -->
     <div id="ham-drawer" role="menu" aria-label="Mobile menu">
+        <!-- Humanitarian Help — priority CTA in mobile menu -->
+        <button class="ham-drawer-item ham-seek-help-item" onclick="openHelpModal(); closeHamMenu();" style="background:rgba(195,37,37,0.12);border-bottom:1px solid rgba(195,37,37,0.25);">
+            <span class="ham-item-icon" style="background:var(--accent-red);">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="#fff"/></svg>
+            </span>
+            <span style="color:#fff;font-weight:600;" data-i18n="s5_cta">Humanitarian Help</span>
+        </button>
+        <div class="ham-drawer-divider"></div>
+        <a class="ham-drawer-item" href="#section-media" onclick="closeHamMenu();">
+            <span class="ham-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M10 8l6 4-6 4V8zm-7 4a9 9 0 1 0 18 0A9 9 0 0 0 3 12z" fill="#000"/></svg>
+            </span>
+            <span data-i18n="nav_videos">Videos</span>
+        </a>
+        <a class="ham-drawer-item" href="#section-whatsapp" onclick="closeHamMenu();">
+            <span class="ham-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" fill="#000"/></svg>
+            </span>
+            <span data-i18n="nav_message">Message</span>
+        </a>
+        <div class="ham-drawer-divider"></div>
         <button class="ham-drawer-item" onclick="openLangOverlay(); closeHamMenu();">
             <span class="ham-item-icon"><span class="flag-emoji" id="ham-flag">🌐</span></span>
             <span data-i18n="nav_language">Language</span>
@@ -2055,6 +2192,19 @@
             <span class="ham-item-icon"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8h14v2H5z"/></svg></span>
             <span>Install App</span>
         </button>
+    </div>
+
+    <!-- ====== SEEK HELP PRIORITY NOTICE ====== -->
+    <div id="seek-help-notice" role="alert" aria-live="polite">
+        <span class="notice-dot"></span>
+        <span class="notice-text">
+            <strong>Humanitarian Help</strong><span class="notice-long"> &mdash; Passport, Healthcare, Humanity or Gurudwara Seva</span>
+        </span>
+        <button class="notice-cta" onclick="openHelpModal()">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+            Humanitarian Help
+        </button>
+        <button class="notice-dismiss" onclick="document.getElementById('seek-help-notice').classList.add('dismissed')" aria-label="Dismiss">&times;</button>
     </div>
 
     <div class="main-wrapper">
@@ -2139,7 +2289,7 @@
                 <div id="section-5-img-col" style="flex:0 0 50%;position:relative;overflow:hidden;background:#111;">
                     <img id="seek-help-img"
                          src="./imgs/seekhelp.webp"
-                         alt="Humanity help"
+                         alt="Humanitarian Help"
                          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.82) contrast(1.08);transition:opacity 0.6s ease;">
                     <img id="grabbed-help-img"
                          src="./imgs/grabbedhelp.webp"
@@ -2149,6 +2299,10 @@
 
                 <!-- RIGHT: text + button, vertically centred -->
                 <div id="section-5-text-col" style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:6vw 5vw;background:var(--bg-alt);">
+                                          <button class="seek-help-btn" onclick="swapSeekHelpImage(); openHelpModal();">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                            <span data-i18n="s5_cta">Humanitarian Help</span>
+                        </button>
                     <p class="reveal" data-i18n="s5_label" style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-red);margin-bottom:1.2rem;">— Community Support</p>
                     <h2 class="reveal delay-1" data-i18n="s5_title" style="font-family:var(--font-serif);font-size:clamp(1.8rem,3.5vw,3rem);color:var(--text-light);line-height:1.25;margin-bottom:1.5rem;">
                         Need help with Humanity, Passport, or other urgent matters?
@@ -2157,10 +2311,7 @@
                         Amrik Singh assists the community beyond crisis relief — reaching out to those navigating Humanity procedures, passport renewals, and other official challenges. If you or someone you know needs guidance, submit a request and he will personally review it.
                     </p>
                     <div class="reveal delay-2">
-                        <button class="seek-help-btn" onclick="swapSeekHelpImage(); openHelpModal();">
-                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
-                            <span data-i18n="s5_cta">Humanity help</span>
-                        </button>
+  
                     </div>
                 </div>
             </div>
@@ -2616,7 +2767,7 @@ const EN = {
   s5_label:     '— Community Support',
   s5_title:     'Need help with Humanity, Passport, or other urgent matters?',
   s5_body:      'Amrik Singh assists the community beyond crisis relief — reaching out to those navigating Humanity procedures, passport renewals, and other official challenges. If you or someone you know needs guidance, submit a request and he will personally review it.',
-  s5_cta:       'Humanity help',
+  s5_cta:       'Humanitarian Help',
   media_label:  '— Videos & Media',
   media_title:  'Watch & Follow Along.',
   media_sub:    'From TikTok to YouTube, Amrik Singh documents life, service, and Sikh culture in Spain with 227K+ followers and 6.8M likes.',
@@ -3163,7 +3314,7 @@ window.addEventListener('appinstalled', () => {
 })();
 
 /* =============================================
-   Humanity help MODAL
+   Humanitarian Help MODAL
 ============================================= */
 let selectedHelpContext = '';
 
