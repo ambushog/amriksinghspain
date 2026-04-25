@@ -1948,11 +1948,16 @@
             from { transform: translateY(-100%); opacity: 0; }
             to   { transform: translateY(0);    opacity: 1; }
         }
-        #seek-help-notice.dismissed {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
+#seek-help-notice.dismissed {
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom-width: 0;
+    overflow: hidden;
+}
         .notice-dot {
             width: 7px; height: 7px;
             background: var(--accent-red);
@@ -2184,7 +2189,18 @@
 
     </div>
 </div>
-
+    <!-- ====== SEEK HELP PRIORITY NOTICE ====== -->
+    <div id="seek-help-notice" role="alert" aria-live="polite">
+        <span class="notice-dot"></span>
+        <span class="notice-text">
+            <strong>Humanitarian Help</strong><span class="notice-long"> &mdash; Healthcare, DeathCare, Humanity or Gurudwara Seva</span>
+        </span>
+        <button class="notice-cta" onclick="openHelpModal()">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+            Humanitarian Help
+        </button>
+        <button class="notice-dismiss" onclick="document.getElementById('seek-help-notice').classList.add('dismissed')" aria-label="Dismiss">&times;</button>
+    </div>
     <nav>
         <!-- Left: Brand -->
         <a class="nav-brand" href="#">
@@ -2254,18 +2270,7 @@
         </button>
     </div>
 
-    <!-- ====== SEEK HELP PRIORITY NOTICE ====== -->
-    <div id="seek-help-notice" role="alert" aria-live="polite">
-        <span class="notice-dot"></span>
-        <span class="notice-text">
-            <strong>Humanitarian Help</strong><span class="notice-long"> &mdash; Healthcare, DeathCare, Humanity or Gurudwara Seva</span>
-        </span>
-        <button class="notice-cta" onclick="openHelpModal()">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
-            Humanitarian Help
-        </button>
-        <button class="notice-dismiss" onclick="document.getElementById('seek-help-notice').classList.add('dismissed')" aria-label="Dismiss">&times;</button>
-    </div>
+
 
     <div class="main-wrapper">
 
