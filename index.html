@@ -1375,6 +1375,74 @@
         }
         .hf-submit-btn svg { width: 16px; height: 16px; fill: white; }
 
+        /* ---- Submitted At toggle ---- */
+        .hf-submitted-wrap { margin-bottom: 1.4rem; }
+        .hf-label-required {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.35rem;
+        }
+        .hf-req-star { color: var(--accent-red); margin-left: 2px; }
+        .hf-submitted-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+        .hf-toggle-track {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 100px;
+            padding: 4px;
+            gap: 0;
+            user-select: none;
+        }
+        .hf-toggle-btn {
+            position: relative;
+            z-index: 2;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.45rem 1.5rem;
+            border-radius: 100px;
+            transition: color 0.25s;
+            white-space: nowrap;
+        }
+        .hf-toggle-btn[aria-checked="true"] { color: #fff; font-weight: 600; }
+        .hf-toggle-btn:focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 2px; }
+        .hf-toggle-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(255,255,255,0.15);
+            flex-shrink: 0;
+        }
+        .hf-toggle-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: calc(100% - 8px);
+            border-radius: 100px;
+            background: var(--accent-red);
+            transition: transform 0.28s cubic-bezier(.4,0,.2,1), width 0.28s cubic-bezier(.4,0,.2,1);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hf-submitted-error {
+            color: #e06060;
+            font-size: 0.72rem;
+            margin-top: 0.45rem;
+        }
+
         .hf-success {
             display: none;
             text-align: center;
@@ -2169,6 +2237,35 @@
             <div class="hf-group">
                 <label for="hf-message">Describe your situation</label>
                 <textarea class="hf-textarea" id="hf-message" placeholder="Please briefly describe what help you need..."></textarea>
+            </div>
+
+            <!-- Submitted At — toggle slide button (required) -->
+            <div class="hf-group hf-submitted-wrap" id="hf-submitted-group">
+                <label class="hf-label-required">Submitted At <span class="hf-req-star">*</span></label>
+                <p class="hf-submitted-hint">Select the office where this request is being submitted:</p>
+                <div class="hf-toggle-track" id="hf-submitted-toggle" role="radiogroup" aria-required="true">
+                    <button type="button"
+                        class="hf-toggle-btn"
+                        id="hf-toggle-barcelona"
+                        role="radio"
+                        aria-checked="false"
+                        onclick="setSubmittedAt('Barcelona')"
+                        data-value="Barcelona">
+                        Barcelona
+                    </button>
+                    <span class="hf-toggle-divider"></span>
+                    <button type="button"
+                        class="hf-toggle-btn"
+                        id="hf-toggle-madrid"
+                        role="radio"
+                        aria-checked="false"
+                        onclick="setSubmittedAt('Madrid')"
+                        data-value="Madrid">
+                        Madrid
+                    </button>
+                    <span class="hf-toggle-slider" id="hf-toggle-slider"></span>
+                </div>
+                <p class="hf-submitted-error" id="hf-submitted-error" style="display:none;">⚠ Please select Barcelona or Madrid.</p>
             </div>
 
             <button class="hf-submit-btn" id="hf-submit-btn" onclick="submitHelpForm()">
@@ -3410,6 +3507,34 @@ function selectChip(btn) {
   selectedHelpContext = btn.dataset.value;
 }
 
+/* =============================================
+   SUBMITTED AT TOGGLE
+============================================= */
+window._submittedAt = 'Barcelona';
+
+function setSubmittedAt(value) {
+  window._submittedAt = value;
+
+  const btnBarcelona = document.getElementById('hf-toggle-barcelona');
+  const btnMadrid    = document.getElementById('hf-toggle-madrid');
+  const slider       = document.getElementById('hf-toggle-slider');
+  const error        = document.getElementById('hf-submitted-error');
+  const track        = document.getElementById('hf-submitted-toggle');
+
+  // Update aria-checked
+  btnBarcelona.setAttribute('aria-checked', value === 'Barcelona' ? 'true' : 'false');
+  btnMadrid.setAttribute('aria-checked',    value === 'Madrid'    ? 'true' : 'false');
+
+  // Animate slider to the chosen button
+  const activeBtn = value === 'Barcelona' ? btnBarcelona : btnMadrid;
+  slider.style.width  = activeBtn.offsetWidth + 'px';
+  slider.style.transform = `translateX(${activeBtn.offsetLeft - 4}px)`;
+
+  // Clear error
+  if (error) error.style.display = 'none';
+  if (track) track.style.outline = '';
+}
+
 function submitHelpForm() {
   const name     = document.getElementById('hf-name').value.trim();
   const phone    = document.getElementById('hf-phone').value.trim();
@@ -3427,6 +3552,20 @@ function submitHelpForm() {
     });
     return;
   }
+
+  // Validate Submitted At toggle
+  const submittedAt = window._submittedAt || '';
+  const submittedError = document.getElementById('hf-submitted-error');
+  if (!submittedAt) {
+    if (submittedError) submittedError.style.display = 'block';
+    document.getElementById('hf-submitted-toggle').style.outline = '2px solid var(--accent-red)';
+    document.getElementById('hf-submitted-toggle').style.outlineOffset = '3px';
+    setTimeout(() => {
+      document.getElementById('hf-submitted-toggle').style.outline = '';
+    }, 2500);
+    return;
+  }
+  if (submittedError) submittedError.style.display = 'none';
 
   const address  = document.getElementById('hf-address').value.trim();
   const passport = document.getElementById('hf-passport').value.trim();
@@ -3484,6 +3623,7 @@ const context = (need && need.value) ? need.value : (selectedHelpContext || 'Oth
     ['entry.332260706',  name],
     ['entry.1677880857', address],
     ['entry.1055226351', country],
+    ['entry.473205085',  submittedAt],
     ['entry.1353750318', passport],
     ['entry.2101488096', phone],
     ['entry.298641650',  email],
@@ -3661,6 +3801,9 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Default: Barcelona pre-selected
+  requestAnimationFrame(() => setSubmittedAt('Barcelona'));
 });
 
 /* =============================================
