@@ -3236,38 +3236,29 @@ function submitHelpForm() {
   // -------------------------------------------------------
   const FORM_ID = '1FAIpQLSfUT3Oq2GfAzotynTaOjD0rFmlu0YOnxYdH1-FZesDnuGMMNw';
 
-  // Google Form entry IDs mapped to form fields
-  const params = new URLSearchParams({
-    'entry.1437668908': context,
-    'entry.332260706':  name,
-    'entry.1677880857': address,
-    'entry.1055226351': country,
-    'entry.1353750318': passport,
-    'entry.2101488096': phone,
-    'entry.298641650':  email,
-    'entry.236588459':  message,
-  });
-
-  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?${params.toString()}`;
-
-  // Submit silently via hidden iframe (no redirect, no CORS issue)
-  const iframe = document.createElement('iframe');
-  iframe.name = 'hidden-help-iframe';
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
+  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
 
   const btn = document.getElementById('hf-submit-btn');
   btn.disabled = true;
   btn.innerHTML = '<span>Sending…</span>';
 
-  // Create a hidden form pointing to the iframe
+  // Hidden iframe absorbs Google's redirect so the page never navigates away.
+  // The form POST goes through fine — we just can't read the response (that's fine).
+  let iframe = document.getElementById('gform-hidden-iframe');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id   = 'gform-hidden-iframe';
+    iframe.name = 'gform-hidden-iframe';
+    iframe.style.cssText = 'display:none;width:0;height:0;border:0;position:absolute;';
+    document.body.appendChild(iframe);
+  }
+
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = formUrl;
-  form.target = 'hidden-help-iframe';
+  form.target = 'gform-hidden-iframe';
   form.style.display = 'none';
 
-  // POST fields
   [
     ['entry.1437668908', context],
     ['entry.332260706',  name],
@@ -3279,8 +3270,8 @@ function submitHelpForm() {
     ['entry.236588459',  message],
   ].forEach(([k, v]) => {
     const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = k;
+    input.type  = 'hidden';
+    input.name  = k;
     input.value = v;
     form.appendChild(input);
   });
@@ -3288,13 +3279,12 @@ function submitHelpForm() {
   document.body.appendChild(form);
   form.submit();
 
-  // Show success after a short delay
   setTimeout(() => {
+    document.body.removeChild(form);
     document.getElementById('help-form-container').style.display = 'none';
     document.getElementById('hf-success').classList.add('show');
-    // Auto-close after 5 seconds
     setTimeout(() => closeHelpModal(), 5000);
-  }, 800);
+  }, 1000);
 }
 
 /* =============================================
