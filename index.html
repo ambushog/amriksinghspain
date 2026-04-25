@@ -1922,15 +1922,20 @@
 
         <div class="help-modal-body" id="help-form-container">
 
-            <!-- Context / Topic Selection -->
+            <!-- Types of Help Dropdown (Replaced top chips) -->
             <div class="hf-group">
-                <label>What do you need help with?</label>
-                <div class="hf-context-chips" id="hf-context-chips">
-                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Humanity">🛂 Humanity</button>
-                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Passport">📘 Passport</button>
-                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="PCC">🔏 PCC</button>
-                    <button type="button" class="hf-chip" onclick="selectChip(this)" data-value="Other">🤝 Other</button>
-                </div>
+                <label for="hf-need">Type of Help Needed *</label>
+                <select class="hf-select" id="hf-need" required>
+                    <option value="">— Select what you need help with —</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Flood Care">Flood Care</option>
+                    <option value="Death Case">Death Case</option>
+                    <option value="Gurudwara Seva">Gurudwara Seva</option>
+                    <option value="Immigration">Immigration</option>
+                    <option value="Passport">Passport</option>
+                    <option value="PCC">PCC</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
 
             <div class="hf-row">
