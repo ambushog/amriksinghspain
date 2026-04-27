@@ -3574,77 +3574,48 @@ function submitHelpForm() {
 const context = (need && need.value) ? need.value : (selectedHelpContext || 'Other');
 
   // -------------------------------------------------------
-  // Google Form submission via hidden iframe trick
-  // (No backend needed — fully static)
-  //
-  // HOW TO SET UP YOUR GOOGLE FORM:
-  // 1. Create a Google Form with these fields:
-  //    - Context (short answer)
-  //    - Name (short answer)
-  //    - Address (short answer)
-  //    - Country (short answer)
-  //    - Passport Number (short answer)
-  //    - Contact Number (short answer)
-  //    - Email (short answer)
-  //    - Message (paragraph)
-  // 2. Get the form ID from the URL:
-  //    https://docs.google.com/forms/d/e/FORM_ID/viewform
-  // 3. Get the entry IDs by inspecting the form or using
-  //    "Get pre-filled link" from the form's 3-dot menu
-  // 4. Replace GOOGLE_FORM_ID and entry.XXXXXXXX below
+  // Custom Backend Submission — https://BACKDATA.amriksinghspain.com
   // -------------------------------------------------------
-  const FORM_ID = '1FAIpQLSfUT3Oq2GfAzotynTaOjD0rFmlu0YOnxYdH1-FZesDnuGMMNw';
-
-  const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+  const API_URL = 'https://BACKDATA.amriksinghspain.com/submit';
 
   const btn = document.getElementById('hf-submit-btn');
   btn.disabled = true;
   btn.innerHTML = '<span>Sending…</span>';
 
-  // Hidden iframe absorbs Google's redirect so the page never navigates away.
-  // The form POST goes through fine — we just can't read the response (that's fine).
-  let iframe = document.getElementById('gform-hidden-iframe');
-  if (!iframe) {
-    iframe = document.createElement('iframe');
-    iframe.id   = 'gform-hidden-iframe';
-    iframe.name = 'gform-hidden-iframe';
-    iframe.style.cssText = 'display:none;width:0;height:0;border:0;position:absolute;';
-    document.body.appendChild(iframe);
-  }
+  const payload = {
+    context:     context,
+    name:        name,
+    address:     address,
+    country:     country,
+    submitted_at: submittedAt,
+    passport:    passport,
+    phone:       phone,
+    email:       email,
+    message:     message,
+    source:      'amriksinghspain.com',
+    timestamp:   new Date().toISOString()
+  };
 
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = formUrl;
-  form.target = 'gform-hidden-iframe';
-  form.style.display = 'none';
-
-  [
-    ['entry.1437668908', context],
-    ['entry.332260706',  name],
-    ['entry.1677880857', address],
-    ['entry.1055226351', country],
-    ['entry.473205085',  submittedAt],
-    ['entry.1353750318', passport],
-    ['entry.2101488096', phone],
-    ['entry.298641650',  email],
-    ['entry.236588459',  message],
-  ].forEach(([k, v]) => {
-    const input = document.createElement('input');
-    input.type  = 'hidden';
-    input.name  = k;
-    input.value = v;
-    form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
-  form.submit();
-
-  setTimeout(() => {
-    document.body.removeChild(form);
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('Server error: ' + res.status);
+    return res.json();
+  })
+  .then(data => {
     document.getElementById('help-form-container').style.display = 'none';
     document.getElementById('hf-success').classList.add('show');
     setTimeout(() => closeHelpModal(), 5000);
-  }, 1000);
+  })
+  .catch(err => {
+    console.error('Submission error:', err);
+    btn.disabled = false;
+    btn.innerHTML = '<span>Submit Request</span>';
+    alert('There was a problem submitting your request. Please try again or contact us directly via WhatsApp.');
+  });
 }
 
 /* =============================================
