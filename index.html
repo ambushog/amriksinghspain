@@ -790,7 +790,17 @@
         .yt-facade { aspect-ratio: 16/9; }
 
         /* TikTok facade — portrait */
+        /* TikTok facade — portrait */
         .tt-facade { aspect-ratio: 9/16; max-height: 700px; }
+
+        /* Transparent tap overlay so clicking anywhere on the video opens TikTok */
+        .tt-tap-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            cursor: pointer;
+            background: transparent;
+        }
 
         /* When the iframe is loaded, hide the facade overlay */
         .video-facade.loaded { display: none; }
@@ -2465,7 +2475,7 @@
                             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
                             <span data-i18n="s5_cta">Humanitarian Help</span>
                         </button>
-                    <p class="reveal" data-i18n="s5_label" style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-red);margin-bottom:1.2rem;">— Community Support</p>
+                    <p class="reveal" data-i18n="s5_label" style="margin-top:4vh;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent-red);margin-bottom:1.2rem;">— Community Support</p>
                     <h2 class="reveal delay-1" data-i18n="s5_title" style="font-family:var(--font-serif);font-size:clamp(1.8rem,3.5vw,3rem);color:var(--text-light);line-height:1.25;margin-bottom:1.5rem;">
                         Need help with Humanity, Passport, or other urgent matters?
                     </h2>
@@ -2524,69 +2534,45 @@
                     <div class="tt-carousel-wrap" id="tt-carousel-wrap" style="grid-column:1/-1;">
                         <div class="tt-carousel-track" id="tt-carousel-track">
 
-                    <!-- TikTok Video Card 1 -->
-                    <div class="tiktok-card reveal delay-1">
-                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7438221281796869409','tt-frame-1','width:100%;height:700px;border:none;display:block;')">
-                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 1" loading="lazy" decoding="async" style="height:700px;object-position:center;">
-                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
-                            <span class="facade-platform">TikTok</span>
+         <!-- TikTok Video Card 1 -->
+                    <div class="tiktok-card reveal delay-1" data-tt-id="7438221281796869409" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7438221281796869409">
+                        <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7438221281796869409','_blank')">
+                            <iframe id="tt-frame-1" src="https://www.tiktok.com/embed/v2/7438221281796869409?autoplay=1&muted=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
-                        <iframe id="tt-frame-1" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 2 -->
-                    <div class="tiktok-card reveal delay-2">
-                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7549308030844865794','tt-frame-2','width:100%;height:700px;border:none;display:block;')">
-                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 2" loading="lazy" decoding="async" style="height:700px;object-position:center;">
-                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
-                            <span class="facade-platform">TikTok</span>
+                    <div class="tiktok-card reveal delay-2" data-tt-id="7549308030844865794" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7549308030844865794">
+                        <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7549308030844865794','_blank')">
+                            <iframe id="tt-frame-2" src="https://www.tiktok.com/embed/v2/7549308030844865794?autoplay=1&muted=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
-                        <iframe id="tt-frame-2" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 3 -->
-                    <div class="tiktok-card reveal">
-                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7443077278319381792','tt-frame-3','width:100%;height:700px;border:none;display:block;')">
-                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 3" loading="lazy" decoding="async" style="height:700px;object-position:center;">
-                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
-                            <span class="facade-platform">TikTok</span>
+                    <div class="tiktok-card reveal" data-tt-id="7443077278319381792" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7443077278319381792">
+                        <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7443077278319381792','_blank')">
+                            <iframe id="tt-frame-3" src="https://www.tiktok.com/embed/v2/7443077278319381792?autoplay=1&muted=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
-                        <iframe id="tt-frame-3" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 4 -->
-                    <div class="tiktok-card reveal delay-1">
-                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7445695426071694625','tt-frame-4','width:100%;height:700px;border:none;display:block;')">
-                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 4" loading="lazy" decoding="async" style="height:700px;object-position:center;">
-                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
-                            <span class="facade-platform">TikTok</span>
+                    <div class="tiktok-card reveal delay-1" data-tt-id="7445695426071694625" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7445695426071694625">
+                        <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7445695426071694625','_blank')">
+                            <iframe id="tt-frame-4" src="https://www.tiktok.com/embed/v2/7445695426071694625?autoplay=1&muted=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
-                        <iframe id="tt-frame-4" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
 
                     <!-- TikTok Video Card 5 -->
-                    <div class="tiktok-card reveal delay-2">
-                        <div class="video-facade tt-facade" onclick="loadVideo(this,'https://www.tiktok.com/embed/v2/7429015793288908065','tt-frame-5','width:100%;height:700px;border:none;display:block;')">
-                            <img src="https://i.ytimg.com/vi/3CqmP7FaSeA/hqdefault.jpg" alt="TikTok video 5" loading="lazy" decoding="async" style="height:700px;object-position:center;">
-                            <div class="facade-play"><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="56" height="56"><circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.55)"/><path d="M10 8l6 4-6 4V8z" fill="white"/></svg></div>
-                            <span class="facade-platform">TikTok</span>
+                    <div class="tiktok-card reveal delay-2" data-tt-id="7429015793288908065" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7429015793288908065">
+                        <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7429015793288908065','_blank')">
+                            <iframe id="tt-frame-5" src="https://www.tiktok.com/embed/v2/7429015793288908065?autoplay=1&muted=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
-                        <iframe id="tt-frame-5" style="display:none;" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
                     </div>
-
-                        </div><!-- /tt-carousel-track -->
-
-                        <!-- Carousel nav (desktop only) -->
-                        <div class="tt-carousel-nav">
-                            <button class="tt-carousel-btn" onclick="ttCarouselPrev()" aria-label="Previous">
-                                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                            </button>
-                            <div class="tt-carousel-dots" id="tt-dots"></div>
-                            <button class="tt-carousel-btn" onclick="ttCarouselNext()" aria-label="Next">
-                                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-                            </button>
-                        </div>
-                    </div><!-- /tt-carousel-wrap -->
 
                 </div><!-- /video-grid -->
                 <div class="social-links-row reveal">
