@@ -2163,6 +2163,33 @@
                 height: 22px;
             }
         }
+        /* ── Visit Counter in Nav ── */
+#_vc {
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 6px !important;
+    padding: 5px 12px !important;
+    gap: 7px !important;
+    box-shadow: none !important;
+}
+#_vc-num {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+}
+#_vc-label {
+    font-size: 9px !important;
+    letter-spacing: 0.14em !important;
+}
+#_vc-dot {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+/* Hide on mobile (nav already tight) */
+@media (max-width: 700px) {
+    #visit-counter { display: none !important; }
+}
     </style>
 </head>
 <body>
@@ -2346,6 +2373,7 @@
 
         <!-- Right: Lang + Install (desktop) + Hamburger (mobile) -->
         <div class="nav-right">
+             <div id="visit-counter"></div> 
             <div class="nav-lang-btn-wrap">
                 <button class="nav-lang-btn" id="nav-lang-btn" onclick="openLangOverlay()" title="Change language">
                     <span class="flag" id="nav-flag">🌐</span>
