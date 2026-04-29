@@ -1079,13 +1079,14 @@
 
         /* ========================================
            PERFORMANCE: Content Visibility
+           section-media, section-whatsapp, section-6
+           are excluded — content-visibility:auto breaks
+           IntersectionObserver reveal animations and causes
+           buttons to be invisible until a DevTools resize reflow.
         ======================================== */
         #section-3,
         #section-4,
-        #section-5,
-        #section-media,
-        #section-whatsapp,
-        #section-6 {
+        #section-5 {
             content-visibility: auto;
             contain-intrinsic-size: 0 100vh;
         }
@@ -2608,7 +2609,7 @@
          <!-- TikTok Video Card 1 -->
                     <div class="tiktok-card reveal delay-1" data-tt-id="7438221281796869409" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7438221281796869409">
                         <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7438221281796869409','_blank')">
-                            <iframe id="tt-frame-1" src="https://www.tiktok.com/embed/v2/7438221281796869409?autoplay=1&muted=1&loop=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <iframe id="tt-frame-1" data-src="https://www.tiktok.com/embed/v2/7438221281796869409?autoplay=1&muted=1&loop=1" src="" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay *; encrypted-media *; fullscreen *"></iframe>
                             <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
                     </div>
@@ -2616,7 +2617,7 @@
                     <!-- TikTok Video Card 2 -->
                     <div class="tiktok-card reveal delay-2" data-tt-id="7549308030844865794" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7549308030844865794">
                         <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7549308030844865794','_blank')">
-                            <iframe id="tt-frame-2" src="https://www.tiktok.com/embed/v2/7549308030844865794?autoplay=1&muted=1&loop=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <iframe id="tt-frame-2" data-src="https://www.tiktok.com/embed/v2/7549308030844865794?autoplay=1&muted=1&loop=1" src="" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay *; encrypted-media *; fullscreen *"></iframe>
                             <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
                     </div>
@@ -2624,7 +2625,7 @@
                     <!-- TikTok Video Card 3 -->
                     <div class="tiktok-card reveal" data-tt-id="7443077278319381792" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7443077278319381792">
                         <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7443077278319381792','_blank')">
-                            <iframe id="tt-frame-3" src="https://www.tiktok.com/embed/v2/7443077278319381792?autoplay=1&muted=1&loop=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <iframe id="tt-frame-3" data-src="https://www.tiktok.com/embed/v2/7443077278319381792?autoplay=1&muted=1&loop=1" src="" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay *; encrypted-media *; fullscreen *"></iframe>
                             <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
                     </div>
@@ -2632,7 +2633,7 @@
                     <!-- TikTok Video Card 4 -->
                     <div class="tiktok-card reveal delay-1" data-tt-id="7445695426071694625" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7445695426071694625">
                         <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7445695426071694625','_blank')">
-                            <iframe id="tt-frame-4" src="https://www.tiktok.com/embed/v2/7445695426071694625?autoplay=1&muted=1&loop=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <iframe id="tt-frame-4" data-src="https://www.tiktok.com/embed/v2/7445695426071694625?autoplay=1&muted=1&loop=1" src="" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay *; encrypted-media *; fullscreen *"></iframe>
                             <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
                     </div>
@@ -2640,7 +2641,7 @@
                     <!-- TikTok Video Card 5 -->
                     <div class="tiktok-card reveal delay-2" data-tt-id="7429015793288908065" data-tt-url="https://www.tiktok.com/@amrik.singh.spain/video/7429015793288908065">
                         <div class="video-facade tt-facade tt-autoplay-facade" style="cursor:pointer;" onclick="window.open('https://www.tiktok.com/@amrik.singh.spain/video/7429015793288908065','_blank')">
-                            <iframe id="tt-frame-5" src="https://www.tiktok.com/embed/v2/7429015793288908065?autoplay=1&muted=1&loop=1" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                            <iframe id="tt-frame-5" data-src="https://www.tiktok.com/embed/v2/7429015793288908065?autoplay=1&muted=1&loop=1" src="" style="width:100%;height:700px;border:none;display:block;" scrolling="no" allowfullscreen allow="autoplay *; encrypted-media *; fullscreen *"></iframe>
                             <div class="tt-tap-overlay" title="Watch on TikTok"></div>
                         </div>
                     </div>
@@ -3734,58 +3735,56 @@ document.addEventListener('click', e => {
 });
 
 /* =============================================
-   TIKTOK AUTOPLAY — IntersectionObserver forces
-   autoplay by reloading src when card enters view
+   TIKTOK AUTOPLAY — Chrome-compatible
+   Chrome blocks autoplay in cross-origin iframes
+   loaded at page start. Fix: keep iframes srcless
+   (data-src only), then inject src AFTER the first
+   user gesture (scroll/click/touch). Once the iframe
+   is created post-gesture, Chrome allows muted autoplay.
 ============================================= */
 (function() {
-  function initTikTokAutoplay() {
-    const ttIframes = document.querySelectorAll('.tiktok-card iframe');
-    if (!ttIframes.length) return;
+  var ttLoaded = false;
 
-    const observer = new IntersectionObserver(function(entries) {
+  function loadTikTokIframes() {
+    if (ttLoaded) return;
+    ttLoaded = true;
+
+    var iframes = document.querySelectorAll('.tiktok-card iframe[data-src]');
+    if (!iframes.length) return;
+
+    // IntersectionObserver: only load iframes near viewport to save bandwidth
+    var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        const iframe = entry.target;
         if (entry.isIntersecting) {
-          // Force reload src with autoplay+muted to trigger play
-          const src = iframe.getAttribute('src') || iframe.dataset.ttSrc || '';
-          if (!src) return;
-          // Store original src
-          if (!iframe.dataset.ttSrc) iframe.dataset.ttSrc = src;
-          // Build clean autoplay URL
-          let url = iframe.dataset.ttSrc;
-          if (!url.includes('autoplay=1')) {
-            url += (url.includes('?') ? '&' : '?') + 'autoplay=1&muted=1';
+          var iframe = entry.target;
+          if (!iframe.getAttribute('src')) {
+            iframe.setAttribute('src', iframe.dataset.src);
           }
-          if (iframe.getAttribute('src') !== url) {
-            iframe.setAttribute('src', url);
-          }
-        } else {
-          // Pause by replacing src without autoplay (or blank to stop)
-          const base = iframe.dataset.ttSrc;
-          if (base && iframe.getAttribute('src') !== base) {
-            iframe.setAttribute('src', base + (base.includes('?') ? '&' : '?') + 'muted=1');
-          }
+          io.unobserve(iframe);
         }
       });
-    }, { threshold: 0.3 });
+    }, { rootMargin: '200px 0px', threshold: 0 });
 
-    ttIframes.forEach(function(iframe) {
-      // Normalise existing src: ensure autoplay=1&muted=1 are present
-      let src = iframe.getAttribute('src') || '';
-      if (src && !src.includes('autoplay=1')) {
-        src += (src.includes('?') ? '&' : '?') + 'autoplay=1&muted=1';
-        iframe.setAttribute('src', src);
-      }
-      iframe.dataset.ttSrc = iframe.getAttribute('src');
-      observer.observe(iframe);
-    });
+    iframes.forEach(function(iframe) { io.observe(iframe); });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTikTokAutoplay);
-  } else {
-    initTikTokAutoplay();
+  // Trigger on first scroll, touch, or click — these are user gestures
+  // that satisfy Chrome's autoplay policy for cross-origin iframes
+  function onFirstGesture() {
+    loadTikTokIframes();
+    window.removeEventListener('scroll', onFirstGesture, true);
+    window.removeEventListener('touchstart', onFirstGesture, true);
+    window.removeEventListener('click', onFirstGesture, true);
+    window.removeEventListener('keydown', onFirstGesture, true);
   }
+
+  window.addEventListener('scroll', onFirstGesture, { passive: true, capture: true });
+  window.addEventListener('touchstart', onFirstGesture, { passive: true, capture: true });
+  window.addEventListener('click', onFirstGesture, { capture: true });
+  window.addEventListener('keydown', onFirstGesture, { capture: true });
+
+  // Fallback: load after 3 seconds even without gesture (covers autoplay-allowed browsers)
+  setTimeout(loadTikTokIframes, 3000);
 })();
 
 
