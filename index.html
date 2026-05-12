@@ -2208,6 +2208,162 @@
     height: 6px !important;
 }
 
+
+/* ========================================
+   JOBS SECTION
+======================================== */
+#section-jobs {
+    position: relative;
+    z-index: 9;
+    background: linear-gradient(135deg, #0d0d0d 0%, #141414 50%, #0a0a0a 100%);
+    padding: 10vh 6vw 12vh;
+    box-shadow: 0 -30px 60px rgba(0,0,0,0.9);
+}
+.jobs-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+.jobs-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35);
+    color: var(--accent-gold); font-size: 0.68rem; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px;
+    margin-bottom: 1.8rem;
+}
+.jobs-badge-dot {
+    width: 6px; height: 6px; background: var(--accent-gold);
+    border-radius: 50%; animation: pulse 2s infinite;
+}
+.jobs-title {
+    font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400; line-height: 1.2; margin-bottom: 1.2rem; color: var(--text-light);
+}
+.jobs-title span { color: var(--accent-gold); font-style: italic; }
+.jobs-desc {
+    color: var(--text-muted); font-size: 1rem; line-height: 1.8;
+    max-width: 600px; margin: 0 auto 2.8rem;
+}
+.jobs-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem; margin-bottom: 3rem;
+}
+.jobs-card {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border-light);
+    padding: 1.6rem 1.4rem; text-align: left; transition: border-color 0.3s, background 0.3s;
+}
+.jobs-card:hover { border-color: rgba(212,168,83,0.4); background: rgba(212,168,83,0.04); }
+.jobs-card-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+.jobs-card-title { font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--text-light); }
+.jobs-card-sub { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.03em; }
+.jobs-cta-btn {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--accent-gold); color: #0a0a0a;
+    padding: 1rem 2.4rem; font-size: 0.82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em; text-decoration: none;
+    font-family: var(--font-sans); transition: background 0.25s, transform 0.2s;
+    border: none; cursor: pointer;
+}
+.jobs-cta-btn:hover { background: #c49840; transform: translateY(-2px); }
+.jobs-cta-btn svg { width: 16px; height: 16px; fill: #0a0a0a; flex-shrink: 0; }
+.jobs-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 1.2rem; opacity: 0.7; }
+
+/* ========================================
+   JOBS POPUP
+======================================== */
+#jobs-popup-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.82); z-index: 100000;
+    align-items: center; justify-content: center; padding: 1rem;
+    backdrop-filter: blur(6px);
+}
+#jobs-popup-overlay.active { display: flex; }
+#jobs-popup {
+    background: #141414; border: 1px solid rgba(212,168,83,0.4);
+    max-width: 480px; width: 100%; position: relative;
+    animation: popupIn 0.4s cubic-bezier(0.16,1,0.3,1);
+    overflow: hidden;
+}
+@keyframes popupIn {
+    from { opacity:0; transform: scale(0.9) translateY(20px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+}
+.jobs-popup-top {
+    background: var(--accent-gold); padding: 1.4rem 1.6rem;
+    display: flex; align-items: center; gap: 1rem;
+}
+.jobs-popup-top-icon { font-size: 1.8rem; }
+.jobs-popup-top-text {}
+.jobs-popup-top-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: rgba(0,0,0,0.6); font-weight: 700;
+}
+.jobs-popup-top-title {
+    font-family: var(--font-serif); font-size: 1.3rem; color: #0a0a0a; line-height: 1.2;
+}
+.jobs-popup-body { padding: 1.8rem 1.6rem; }
+.jobs-popup-body p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 1.4rem; }
+.jobs-popup-body strong { color: var(--text-light); }
+.jobs-popup-cta {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    background: var(--accent-gold); color: #0a0a0a; padding: 0.9rem 1.6rem;
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; text-decoration: none; font-family: var(--font-sans);
+    transition: background 0.2s; width: 100%;
+}
+.jobs-popup-cta:hover { background: #c49840; }
+.jobs-popup-dismiss {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    background: rgba(0,0,0,0.3); border: none; color: #0a0a0a;
+    width: 28px; height: 28px; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: background 0.2s;
+}
+.jobs-popup-dismiss:hover { background: rgba(0,0,0,0.5); }
+.jobs-popup-skip {
+    display: block; text-align: center; margin-top: 0.9rem;
+    font-size: 0.72rem; color: var(--text-muted); cursor: pointer;
+    text-decoration: underline; background: none; border: none;
+    font-family: var(--font-sans); width: 100%;
+}
+.jobs-popup-skip:hover { color: var(--text-light); }
+
+/* ========================================
+   JOBS BOTTOM BANNER
+======================================== */
+#jobs-bottom-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: linear-gradient(90deg, #1a1200 0%, #141414 40%, #1a1200 100%);
+    border-top: 2px solid var(--accent-gold);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 2rem; gap: 1rem;
+    transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 -4px 30px rgba(212,168,83,0.15);
+}
+#jobs-bottom-banner.visible { transform: translateY(0); }
+.jbb-left { display: flex; align-items: center; gap: 0.8rem; flex: 1; min-width: 0; }
+.jbb-icon { font-size: 1.3rem; flex-shrink: 0; }
+.jbb-text {}
+.jbb-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-gold); }
+.jbb-title { font-size: 0.88rem; color: var(--text-light); font-family: var(--font-serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jbb-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent-gold); color: #0a0a0a;
+    padding: 0.55rem 1.3rem; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none;
+    font-family: var(--font-sans); white-space: nowrap; flex-shrink: 0;
+    transition: background 0.2s;
+}
+.jbb-btn:hover { background: #c49840; }
+.jbb-close {
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    font-size: 1.1rem; padding: 0.3rem; line-height: 1; flex-shrink: 0;
+    transition: color 0.2s;
+}
+.jbb-close:hover { color: var(--text-light); }
+@media (max-width: 600px) {
+    #jobs-bottom-banner { padding: 0.6rem 1rem; }
+    .jbb-title { font-size: 0.78rem; }
+    .jbb-btn { padding: 0.5rem 0.9rem; font-size: 0.68rem; }
+    /* push content up so banner doesn't cover it */
+    body.jbb-visible { padding-bottom: 56px; }
+}
  </style>
 </head>
 <body>
@@ -2776,6 +2932,47 @@
             </div>
             </section>
         </div><!-- /wa-scroll-wrapper -->
+
+        <!-- ========================================
+             SECTION: JOBS — Dedicated Jobs Portal
+        ======================================== -->
+        <section id="section-jobs">
+            <div class="jobs-inner reveal">
+                <div class="jobs-badge">
+                    <span class="jobs-badge-dot"></span>
+                    Now Hiring in Spain
+                </div>
+                <h2 class="jobs-title">Find Your <span>Career</span><br>in Spain</h2>
+                <p class="jobs-desc">Amrik Singh's community job portal connects skilled workers and employers across Spain. Browse verified listings in agriculture, hospitality, construction, and more.</p>
+                <div class="jobs-cards">
+                    <div class="jobs-card">
+                        <div class="jobs-card-icon">🌾</div>
+                        <div class="jobs-card-title">Agriculture</div>
+                        <div class="jobs-card-sub">Seasonal & permanent farm roles</div>
+                    </div>
+                    <div class="jobs-card">
+                        <div class="jobs-card-icon">🏗️</div>
+                        <div class="jobs-card-title">Construction</div>
+                        <div class="jobs-card-sub">Skilled trades & labourer positions</div>
+                    </div>
+                    <div class="jobs-card">
+                        <div class="jobs-card-icon">🍽️</div>
+                        <div class="jobs-card-title">Hospitality</div>
+                        <div class="jobs-card-sub">Hotels, restaurants & catering</div>
+                    </div>
+                    <div class="jobs-card">
+                        <div class="jobs-card-icon">🚚</div>
+                        <div class="jobs-card-title">Logistics</div>
+                        <div class="jobs-card-sub">Drivers, warehouse & delivery</div>
+                    </div>
+                </div>
+                <a href="https://Jobs.amriksinghspain.com" target="_blank" class="jobs-cta-btn">
+                    <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.1 15.9 0 13.45 0c-1.3 0-2.48.57-3.33 1.46L10 2l-.12-.54C9.03.57 7.85 0 6.55 0 4.1 0 2 2.1 2 4.64c0 .48.11.92.18 1.36H0v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-6.55-4c1.32 0 2.45 1.08 2.45 2.64 0 .48-.07.92-.18 1.36h-4.54c-.11-.44-.18-.88-.18-1.36C11 3.08 12.13 2 13.45 2zM6.55 2C7.87 2 9 3.08 9 4.64c0 .48-.07.92-.18 1.36H4.28c-.11-.44-.18-.88-.18-1.36C4.1 3.08 5.23 2 6.55 2zM11 18H9v-5H7l3-4 3 4h-2v5zm2-7v-1h2v1h-2zm0 2v-1h2v1h-2zm0 2v-1h2v1h-2z"/></svg>
+                    Browse All Jobs
+                </a>
+                <p class="jobs-note">Powered by Jobs.amriksinghspain.com — Free for community members</p>
+            </div>
+        </section>
 
         <!-- FOOTER -->
         <footer class="footer-stack" id="section-6">
@@ -3976,6 +4173,79 @@ function sendWhatsApp() {
   window.open(`https://wa.me/+34615465235?text=${encodeURIComponent(preview)}`, '_blank');
   return false;
 }
+</script>
+<!-- ===== JOBS POPUP ===== -->
+<div id="jobs-popup-overlay">
+    <div id="jobs-popup" role="dialog" aria-label="Jobs in Spain">
+        <button class="jobs-popup-dismiss" onclick="closeJobsPopup()" aria-label="Close">✕</button>
+        <div class="jobs-popup-top">
+            <div class="jobs-popup-top-icon">💼</div>
+            <div class="jobs-popup-top-text">
+                <div class="jobs-popup-top-label">Community Jobs Portal</div>
+                <div class="jobs-popup-top-title">Jobs in Spain —<br>Find Work Today</div>
+            </div>
+        </div>
+        <div class="jobs-popup-body">
+            <p>Looking for work in Spain? <strong>Amrik Singh's jobs portal</strong> connects the community with verified employers across agriculture, construction, hospitality, and logistics.</p>
+            <p>Free to use. Updated weekly. Spanish &amp; Punjabi support available.</p>
+            <a href="https://Jobs.amriksinghspain.com" target="_blank" class="jobs-popup-cta" onclick="closeJobsPopup()">
+                🔍 &nbsp;Browse Jobs at Jobs.amriksinghspain.com
+            </a>
+            <button class="jobs-popup-skip" onclick="closeJobsPopup()">No thanks, continue browsing</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== JOBS BOTTOM BANNER ===== -->
+<div id="jobs-bottom-banner" role="banner">
+    <div class="jbb-left">
+        <div class="jbb-icon">💼</div>
+        <div class="jbb-text">
+            <div class="jbb-label">Now Hiring in Spain</div>
+            <div class="jbb-title">Jobs.amriksinghspain.com — Find work today</div>
+        </div>
+    </div>
+    <a href="https://Jobs.amriksinghspain.com" target="_blank" class="jbb-btn">View Jobs</a>
+    <button class="jbb-close" onclick="closeJobsBanner()" aria-label="Close banner">✕</button>
+</div>
+
+<script>
+/* === JOBS POPUP === */
+(function() {
+    var POPUP_KEY = 'jobs_popup_dismissed';
+    function showJobsPopup() {
+        if (sessionStorage.getItem(POPUP_KEY)) return;
+        document.getElementById('jobs-popup-overlay').classList.add('active');
+    }
+    window.closeJobsPopup = function() {
+        document.getElementById('jobs-popup-overlay').classList.remove('active');
+        sessionStorage.setItem(POPUP_KEY, '1');
+    };
+    // Show after 5 seconds
+    setTimeout(showJobsPopup, 5000);
+    // Close on overlay click
+    document.getElementById('jobs-popup-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closeJobsPopup();
+    });
+})();
+
+/* === JOBS BOTTOM BANNER === */
+(function() {
+    var BANNER_KEY = 'jobs_banner_dismissed';
+    var banner = document.getElementById('jobs-bottom-banner');
+    function showJobsBanner() {
+        if (sessionStorage.getItem(BANNER_KEY)) return;
+        banner.classList.add('visible');
+        document.body.classList.add('jbb-visible');
+    }
+    window.closeJobsBanner = function() {
+        banner.classList.remove('visible');
+        document.body.classList.remove('jbb-visible');
+        sessionStorage.setItem(BANNER_KEY, '1');
+    };
+    // Show after 8 seconds
+    setTimeout(showJobsBanner, 8000);
+})();
 </script>
 </body>
 </html>
