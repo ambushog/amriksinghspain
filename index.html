@@ -2136,6 +2136,10 @@
             z-index: 999;
             pointer-events: all;
         }
+        .hf-consent{display:flex;gap:.7rem;align-items:flex-start;margin-top:1.2rem;padding:1rem;border:1px solid rgba(195,37,37,.35);background:rgba(195,37,37,.06);cursor:pointer}
+.hf-consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent-red);flex-shrink:0;cursor:pointer}
+.hf-consent span{font-size:.78rem;line-height:1.6;color:var(--text-light)}
+.hf-consent.err{outline:2px solid var(--accent-red)}
         .hero-social-icon {
             display: flex;
             align-items: center;
@@ -2500,7 +2504,10 @@
                 </div>
                 <p class="hf-submitted-error" id="hf-submitted-error" style="display:none;">⚠ Please select Barcelona or Madrid.</p>
             </div>
-
+<label class="hf-consent" id="hf-consent-box">
+    <input type="checkbox" id="hf-consent">
+    <span>I consent to Amrik Singh collecting and storing my personal data (name, contact details, passport number and the details of my request) so that he can review my request and contact me. I understand I can ask for my data to be deleted at any time. <span class="hf-req-star">*</span></span>
+</label>
             <button class="hf-submit-btn" id="hf-submit-btn" onclick="submitHelpForm()">
                 <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 Submit Request
@@ -3834,7 +3841,13 @@ function submitHelpForm() {
     return;
   }
   if (submittedError) submittedError.style.display = 'none';
-
+const consentEl = document.getElementById('hf-consent');
+const consentBox = document.getElementById('hf-consent-box');
+if (!consentEl.checked) {
+  consentBox.classList.add('err');
+  setTimeout(() => consentBox.classList.remove('err'), 2500);
+  return;
+}
   const address  = document.getElementById('hf-address').value.trim();
   const passport = document.getElementById('hf-passport').value.trim();
   const message  = document.getElementById('hf-message').value.trim();
