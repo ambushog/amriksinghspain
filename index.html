@@ -4174,27 +4174,6 @@ function sendWhatsApp() {
   return false;
 }
 </script>
-<!-- ===== JOBS POPUP ===== -->
-<div id="jobs-popup-overlay">
-    <div id="jobs-popup" role="dialog" aria-label="Jobs in Spain">
-        <button class="jobs-popup-dismiss" onclick="closeJobsPopup()" aria-label="Close">✕</button>
-        <div class="jobs-popup-top">
-            <div class="jobs-popup-top-icon">💼</div>
-            <div class="jobs-popup-top-text">
-                <div class="jobs-popup-top-label">Community Jobs Portal</div>
-                <div class="jobs-popup-top-title">Jobs in Spain —<br>Find Work Today</div>
-            </div>
-        </div>
-        <div class="jobs-popup-body">
-            <p>Looking for work in Spain? <strong>Amrik Singh's jobs portal</strong> connects the community with verified employers across agriculture, construction, hospitality, and logistics.</p>
-            <p>Free to use. Updated weekly. Spanish &amp; Punjabi support available.</p>
-            <a href="https://Jobs.amriksinghspain.com" target="_blank" class="jobs-popup-cta" onclick="closeJobsPopup()">
-                🔍 &nbsp;Browse Jobs at Jobs.amriksinghspain.com
-            </a>
-            <button class="jobs-popup-skip" onclick="closeJobsPopup()">No thanks, continue browsing</button>
-        </div>
-    </div>
-</div>
 
 <!-- ===== JOBS BOTTOM BANNER ===== -->
 <div id="jobs-bottom-banner" role="banner">
@@ -4210,24 +4189,7 @@ function sendWhatsApp() {
 </div>
 
 <script>
-/* === JOBS POPUP === */
-(function() {
-    var POPUP_KEY = 'jobs_popup_dismissed';
-    function showJobsPopup() {
-        if (sessionStorage.getItem(POPUP_KEY)) return;
-        document.getElementById('jobs-popup-overlay').classList.add('active');
-    }
-    window.closeJobsPopup = function() {
-        document.getElementById('jobs-popup-overlay').classList.remove('active');
-        sessionStorage.setItem(POPUP_KEY, '1');
-    };
-    // Show after 5 seconds
-    setTimeout(showJobsPopup, 5000);
-    // Close on overlay click
-    document.getElementById('jobs-popup-overlay').addEventListener('click', function(e) {
-        if (e.target === this) closeJobsPopup();
-    });
-})();
+
 
 /* === JOBS BOTTOM BANNER === */
 (function() {
